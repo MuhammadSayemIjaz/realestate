@@ -34,7 +34,7 @@ const MyTabs = () => {
         headerShown: false,
         tabBarStyle: {backgroundColor: '#00aeef' , borderTopStartRadius: 10,borderTopEndRadius: 10,},
         tabBarLabelStyle: {color: '#ffff'},
-        tabBarActiveBackgroundColor: '#2d668a75',
+        tabBarActiveBackgroundColor: '#48cae4',
         tabBarItemStyle: {borderTopStartRadius: 7 , borderTopEndRadius: 7},
         tabBarShowLabel: false,
     })}>
@@ -47,7 +47,7 @@ const AppNavigation = () => {
     return (
         <NavigationContainer>
             <StatusBar  barStyle="light-content"
-                backgroundColor="#00aeef" />
+                backgroundColor="#023e8a" />
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Group>

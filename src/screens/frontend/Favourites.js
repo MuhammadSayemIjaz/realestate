@@ -1,93 +1,113 @@
 /* eslint-disable prettier/prettier */
-import { StyleSheet, Image, View, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import Demo from '../../assets/images/Demo.jpg';
+/* eslint-disable react-native/no-inline-styles */
+import {
+  View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Dimensions,
+  Platform,
+} from 'react-native';
+import { Text, Button } from 'react-native-paper';
+import React, { useEffect, useState } from 'react';
+import firestore from '@react-native-firebase/firestore';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const { width: screenWidth } = Dimensions.get('window');
+export default function Houses() {
+  const [products, setProducts] = useState([]);
 
-const initialState = [{
-    Title: 'Demo Image',
-    Location : 'New York',
-    PType : 'Villa',
-    Area : 23,
-    FType : 'AC',
-    Bedrooms: 12,
-    Bathrooms: 6,
-    Rooms: 15,
-    Reception: 2,
-    DRoom: 2,
-    Kitchen: 3,
-    Price: '23.6 Lac',
-    uri: 'https://unsplash.com/photos/w3eFhqXjkZE',
-},
-{
-    Title: 'Demo Image 2',
-    Location : 'New York',
-    PType : 'Villa',
-    Area : 23,
-    FType : 'AC',
-    Bedrooms: 12,
-    Bathrooms: 6,
-    Rooms: 15,
-    Reception: 2,
-    DRoom: 2,
-    Kitchen: 3,
-    Price: '23.6 Lac',
-    uri: 'https://unsplash.com/photos/9gGvNWBeOq4',
-}
-];
+  const ProductData = () => {
+    let array = [];
 
-const Favourites = () => {
-    const [isFocused, setIsFocused] = useState(false);
-    const [Products, setProducts] = useState(initialState);
+    firestore()
+      .collection('Products')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          const BannerData = documentSnapshot.data();
+          array.push(BannerData);
+        });
+        setProducts(array);
+      });
+  };
+  useEffect(() => {
+    ProductData();
+  }, []);
 
-    const handleFavourite = () => {
-        setIsFocused(true);
-    };
-    return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                {Products.map((item, index) => {
-                    return (<View key={index} style={styles.image}>
-                        <View style={[styles.container, { backgroundColor: 'red' }]}>
-                            <Image source={{uri: item.uri}} style={styles.ImageContainer} />
-                        </View>
-                        <TouchableOpacity  style={styles.icon} onPress={handleFavourite}>
-                            <Ionicon name={isFocused ? 'heart' : 'heart-outline'} size={23} />
-                        </TouchableOpacity>
-                    </View>
-                    );
-                })}
+  return (
+    <ScrollView style={{ backgroundColor: '#fff', padding: 20 }}>
+      <Text
+        variant="headlineLarge"
+        style={{ fontWeight: 'bold', textAlign: 'center', paddingVertical: 20 }}>
+        Houses For Sale{' '}
+      </Text>
+      <View style={styles.container}>
+        {products.map((item, index) => {
+          return (
+            <View style={styles.item} key={index}>
+              <View style={styles.imageContainer}>
+                <Image source={{ uri: item.Url }} style={styles.image} />
+              </View>
+              <Text style={styles.title} numberOfLines={2}>
+                {item.Title}
+              </Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Ionicons name="location" size={20} color={'#00aeef'} />
+                <Text>{item.Location} </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  padding: 5,
+                }}>
+                <Text
+                  style={{ fontWeight: 'bold', fontSize: 12, color: '#023047' }}>
+                  Price:{item.Price} PKR
+                </Text>
+                  <Button mode="contained" buttonColor="#00aeef">
+                    See More
+                  </Button>
+              </View>
             </View>
-        </SafeAreaView>
-    );
-};
-
-export default Favourites;
-
+          );
+        })}
+      </View>
+    </ScrollView>
+  );
+}
 const styles = StyleSheet.create({
-    image:{
-        marginTop: 20,
-    },
-    safeArea: {
-        padding: 10,
-        paddingHorizontal: 25,
-        flex: 1,
-    },
-    container: {
-        width: '100%',
-        borderRadius:13,
-    },
-    ImageContainer: {
-        width: 300,
-        height: 190,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
-    },
-    icon: {
-        position: 'absolute',
-        top: 20,
-        right: 30,
-    },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  item: {
+    width: screenWidth - 60,
+    height: screenWidth - 120,
+    borderWidth: 1,
+    marginBottom: 10,
+    borderRadius: 16,
+    borderColor: '#00aeef',
+    padding: 5,
+  },
+  imageContainer: {
+    flex: 1,
+    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  title: {
+    fontWeight: 'bold',
+    paddingHorizontal: 5,
+    fontSize: 15,
+    color: '#023047',
+  },
 });

@@ -7,44 +7,49 @@ import { Text } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 
-// const ENTRIES1 = [
-//     {
-//         illustration: 'https://i.imgur.com/UYiroysl.jpg',
-//     },
-//     {
-//         illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
-//     },
-//     {
-//         illustration: 'https://i.imgur.com/MABUbpDl.jpg',
-//     },
-//     {
-//         illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
-//     },
-//     {
-//         illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
-//     },
-// ];
+const ENTRIES1 = [
+    {
+        illustration: 'https://i.imgur.com/UYiroysl.jpg',
+    },
+    {
+        illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
+    },
+    {
+        illustration: 'https://i.imgur.com/MABUbpDl.jpg',
+    },
+    {
+        illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
+    },
+    {
+        illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
+    },
+];
 const { width: screenWidth } = Dimensions.get('window');
 
 const MyCarousel = props => {
     const carouselRef = useRef(null);
-    const [BannerDocs, setBannerDocs] = useState([]);
+    // const [BannerDocs, setBannerDocs] = useState([]);
+    const [entries , setEntries] = useState([]);
 
-    const BannerData = () => {
-        let array = [];
-        firestore()
-            .collection('Banners')
-            .get()
-            .then(querySnapshot => {
-                querySnapshot.forEach(documentSnapshot => {
-                    const BannerData = documentSnapshot.data();
-                    array.push(BannerData);
-                });
-                setBannerDocs(array);
-            });
-    };
+    // const BannerData = () => {
+    //     let array = [];
+    //     firestore()
+    //         .collection('Banners')
+    //         .get()
+    //         .then(querySnapshot => {
+    //             querySnapshot.forEach(documentSnapshot => {
+    //                 const BannerData = documentSnapshot.data();
+    //                 array.push(BannerData);
+    //             });
+    //             // setBannerDocs(array);
+    //         });
+    // };
+    // useEffect(() => {
+    //     BannerData();
+    // }, []);
+
     useEffect(() => {
-        BannerData();
+        setEntries(ENTRIES1);
     }, []);
 
 
@@ -66,7 +71,7 @@ const MyCarousel = props => {
                     <Text style={[styles.text, { marginBottom: 10 }]}>Title</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Ionicons name="location" color={'#00afef'} size={20} />
-                        <Text style={[styles.text, { marginLeft: 6 }]}>{item.location}</Text>
+                        <Text style={[styles.text, { marginLeft: 6 }]}>Location</Text>
                     </View>
                 </View>
             </View>
@@ -80,7 +85,7 @@ const MyCarousel = props => {
                 sliderWidth={screenWidth}
                 sliderHeight={screenWidth}
                 itemWidth={screenWidth - 60}
-                data={BannerDocs}
+                data={entries}
                 renderItem={renderItem}
                 hasParallaxImages={true}
             />

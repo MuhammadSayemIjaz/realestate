@@ -51,9 +51,9 @@ const Home = () => {
                                 <Text variant="titleLarge" style={{ color: '#35455D' }}>Recommended For You</Text>
                                 <Text style={{ color: 'gray', borderBottomWidth: 1 }}>View All</Text>
                             </View>
-                            {/* <View style={{ marginTop: 20, }}>
+                            <View style={{ marginTop: 20, }}>
                                 <MyCarousel />
-                            </View> */}
+                            </View>
                         </ScrollView>
                     </View>
                 </View>
