@@ -1,8 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { SafeAreaView, StyleSheet, Image, TouchableOpacity, TextInput, View, ScrollView } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, SafeAreaView, StyleSheet, Image, TouchableOpacity, TextInput, View, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyCarousel from '../../components/MyCarousel';
 import Demo from '../../assets/images/Demo.jpg';
@@ -20,17 +19,13 @@ const Home = () => {
                             <Ionicons name="person-circle-outline" size={32} color={'#00aeef'} />
                         </View>
                         <View style={{ paddingVertical: 13 }}>
-                            <Text variant="titleLarge"
-                                style={{
-                                    fontWeight: 'bold',
-                                    textAlign: "center",
-                                }}>
+                            <Text style={styles.headerStyle}>
                                 Find Your Best Property</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <View style={{ backgroundColor: '#00afef35', flexDirection: 'row', borderRadius: 10, width: '83%' }}>
                                 <Ionicons name="search-outline" size={20} style={{ padding: 10, marginTop: 2 }} />
-                                <TextInput placeholder="Search..."  />
+                                <TextInput placeholder="Search..." />
                             </View>
                             <View style={{ backgroundColor: '#00aeef', width: '15%', padding: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
                                 <TouchableOpacity>
@@ -38,7 +33,7 @@ const Home = () => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ScrollView style={{width: '100%', height: 400}}>
+                        <ScrollView style={{ width: '100%', height: 400 }}>
                             <View style={{ marginTop: 20, borderRadius: 10 }}>
                                 <Image source={Demo}
                                     style={{
@@ -48,8 +43,8 @@ const Home = () => {
                                     }} />
                             </View>
                             <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Text variant="titleLarge" style={{ color: '#35455D' }}>Recommended For You</Text>
-                                <Text style={{ color: 'gray', borderBottomWidth: 1 }}>View All</Text>
+                                <Text variant="titleLarge" style={styles.headerStyle}>Recommended For You</Text>
+                                <Text style={styles.smallHeadingStyle}>View All</Text>
                             </View>
                             <View style={{ marginTop: 20, }}>
                                 <MyCarousel />
@@ -72,6 +67,20 @@ const styles = StyleSheet.create({
     },
     container: {
         width: '100%',
+        fontFamily: 'Montserrat-Bold',
     },
-
+    headerStyle: {
+        fontWeight: 'normal',
+        fontSize: 18,
+        fontFamily: 'Montserrat-Bold',
+        color: '#333333',
+    },
+    smallHeadingStyle: {
+        fontWeight: 'normal',
+        fontSize: 13,
+        fontFamily: 'Montserrat-Bold',
+        color: 'gray',
+        borderBottomWidth: 1,
+        borderColor: 'gray',
+    },
 });

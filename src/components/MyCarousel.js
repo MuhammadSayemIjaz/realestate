@@ -65,10 +65,10 @@ const MyCarousel = props => {
                 />
                 <View style={styles.title} numberOfLines={2}>
                     <Text style={styles.text}>
-                        <Text style={{ fontWeight: '900', color: '#FFFF' }}>Price:</Text> {item.price} PKR</Text>
+                        <Text style={styles.priceHeader}>Price:</Text>  1.7 Lac PKR</Text>
                 </View>
                 <View style={styles.details}>
-                    <Text style={[styles.text, { marginBottom: 10 }]}>Title</Text>
+                    <Text style={[styles.priceHeader, { marginBottom: 10, color: '#fff' }]}>Title</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Ionicons name="location" color={'#00afef'} size={20} />
                         <Text style={[styles.text, { marginLeft: 6 }]}>Location</Text>
@@ -125,16 +125,22 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     text: {
-        color: '#FFFF',
+        color: '#ffffffcf',
         fontSize: 15,
+        fontFamily: 'Montserrat-Bold',
     },
     details: {
         position: 'absolute',
         bottom: 0,
         width: '100%',
-        backgroundColor: '#33333386',
+        backgroundColor: '#333333d1',
         padding: 20,
         borderBottomEndRadius: 7,
         borderBottomStartRadius: 7,
+    },
+    priceHeader:{
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 20,
+        color: '#333333',
     },
 });
