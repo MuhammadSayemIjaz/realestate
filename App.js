@@ -5,8 +5,6 @@ import { Provider, MD3LightTheme } from 'react-native-paper';
 import AuthContextProvider from './src/context/AuthContext';
 import Toast from 'react-native-toast-message';
 
-
-
 const theme = {
   ...MD3LightTheme,
   colors: {

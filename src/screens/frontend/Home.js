@@ -1,11 +1,18 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, SafeAreaView, StyleSheet, Image, TouchableOpacity, TextInput, View, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyCarousel from '../../components/MyCarousel';
 import Demo from '../../assets/images/Demo.jpg';
-const Home = () => {
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBarsStaggered, faXmark } from '@fortawesome/free-solid-svg-icons';
+
+const Home = ({navigation}) => {
+    const [isPressed , setIsPressed] = useState(false);
+    const handleIcon = () => {
+        setIsPressed(true);
+    };
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -15,8 +22,10 @@ const Home = () => {
                             flexDirection: 'row',
                             justifyContent: 'space-between'
                         }}>
-                            <Ionicons name="reorder-three-outline" size={32} color={'#00aeef'} />
-                            <Ionicons name="person-circle-outline" size={32} color={'#00aeef'} />
+                            <TouchableOpacity onPress={handleIcon}>
+                                <FontAwesomeIcon icon={isPressed ? faXmark :  faBarsStaggered} size={32} color={'#00aeef'} />
+                            </TouchableOpacity>
+                            <Ionicons  name="person-circle-outline" size={32} color={'#00aeef'} />
                         </View>
                         <View style={{ paddingVertical: 13 }}>
                             <Text style={styles.headerStyle}>
