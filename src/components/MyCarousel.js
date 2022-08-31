@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-shadow */
 import React, { useRef, useState, useEffect } from 'react';
 import Carousel, { ParallaxImage } from 'react-native-snap-carousel';
@@ -7,71 +8,51 @@ import { Text } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 
-const ENTRIES1 = [
-    {
-        illustration: 'https://i.imgur.com/UYiroysl.jpg',
-    },
-    {
-        illustration: 'https://i.imgur.com/UPrs1EWl.jpg',
-    },
-    {
-        illustration: 'https://i.imgur.com/MABUbpDl.jpg',
-    },
-    {
-        illustration: 'https://i.imgur.com/KZsmUi2l.jpg',
-    },
-    {
-        illustration: 'https://i.imgur.com/2nCt3Sbl.jpg',
-    },
-];
+
 const { width: screenWidth } = Dimensions.get('window');
 
 const MyCarousel = props => {
     const carouselRef = useRef(null);
-    // const [BannerDocs, setBannerDocs] = useState([]);
-    const [entries , setEntries] = useState([]);
+    const [entries, setEntries] = useState([]);
 
-    // const BannerData = () => {
-    //     let array = [];
-    //     firestore()
-    //         .collection('Banners')
-    //         .get()
-    //         .then(querySnapshot => {
-    //             querySnapshot.forEach(documentSnapshot => {
-    //                 const BannerData = documentSnapshot.data();
-    //                 array.push(BannerData);
-    //             });
-    //             // setBannerDocs(array);
-    //         });
-    // };
-    // useEffect(() => {
-    //     BannerData();
-    // }, []);
+    const ProductData = () => {
+        let array = [];
 
+        firestore()
+            .collection('Property')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(documentSnapshot => {
+                    const BannerData = documentSnapshot.data();
+                    array.push(BannerData);
+                });
+                setEntries(array);
+            });
+    };
     useEffect(() => {
-        setEntries(ENTRIES1);
+        ProductData();
     }, []);
 
 
     const renderItem = ({ item, index }, parallaxProps) => {
         return (
-            <View style={styles.item}>
+            <View style={styles.item} key={index}>
                 <ParallaxImage
-                    source={{ uri: item.illustration }}
+                    source={{ uri: item.Url }}
                     containerStyle={styles.imageContainer}
                     style={styles.image}
                     parallaxFactor={0.4}
                     {...parallaxProps}
                 />
-                <View style={styles.title} numberOfLines={2}>
+                <View style={styles.title} numberOfLines={5}>
                     <Text style={styles.text}>
-                        <Text style={styles.priceHeader}>Price:</Text>  1.7 Lac PKR</Text>
+                        <Text style={styles.priceHeader}>Price:</Text>  {item.Price} PKR</Text>
                 </View>
                 <View style={styles.details}>
-                    <Text style={[styles.priceHeader, { marginBottom: 10, color: '#fff' }]}>Title</Text>
+                    <Text style={[styles.priceHeader, { marginBottom: 10, color: '#fff' }]}>{item.Title}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Ionicons name="location" color={'#00afef'} size={20} />
-                        <Text style={[styles.text, { marginLeft: 6 }]}>Location</Text>
+                        <Ionicons name="location" color={'#ffff'} size={20} />
+                        <Text style={[styles.text, { marginLeft: 6 }]}>{item.Location}</Text>
                     </View>
                 </View>
             </View>
@@ -88,8 +69,8 @@ const MyCarousel = props => {
                 data={entries}
                 renderItem={renderItem}
                 hasParallaxImages={true}
-                autoplay= {true}
-                autoplayInterval = {2000}
+                autoplay={true}
+                autoplayInterval={2000}
             />
         </View>
     );
@@ -104,8 +85,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     item: {
-        width: screenWidth - 60,
-        height: screenWidth - 150,
+        width: screenWidth - 55,
+        height: screenWidth - 110,
     },
     imageContainer: {
         flex: 1,
@@ -121,7 +102,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         borderRadius: 0,
-        backgroundColor: '#00afef',
+        backgroundColor: '#000000',
         borderTopStartRadius: 7,
         padding: 15,
         paddingHorizontal: 20,
@@ -140,9 +121,9 @@ const styles = StyleSheet.create({
         borderBottomEndRadius: 7,
         borderBottomStartRadius: 7,
     },
-    priceHeader:{
+    priceHeader: {
         fontFamily: 'Montserrat-Bold',
-        fontSize: 20,
-        color: '#333333',
+        fontSize: 16,
+        color: '#ffffff',
     },
 });

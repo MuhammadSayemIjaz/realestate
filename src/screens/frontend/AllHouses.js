@@ -8,13 +8,15 @@ import {
   Dimensions,
   Platform,
   Text,
+  TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
-import {  Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import React, { useEffect, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const { width: screenWidth } = Dimensions.get('window');
-export default function Houses({navigation}) {
+export default function Houses({ navigation }) {
   const [products, setProducts] = useState([]);
 
   const ProductData = () => {
@@ -36,11 +38,16 @@ export default function Houses({navigation}) {
   }, []);
 
   return (
+    <SafeAreaView style={styles.safeArea}>
+        <View style={styles.navigation}>
+          <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.goBack()}>
+            <Ionicons name="chevron-back" size={25} color="#000000" />
+          </TouchableOpacity>
+          <View>
+            <Text style={styles.header}>Houses For Sale {products.length}</Text>
+          </View>
+        </View>
     <ScrollView style={{ backgroundColor: '#fff', padding: 20 }}>
-      <Text
-        style={{ fontWeight: 'bold', textAlign: 'center', color: 'black',  fontSize: 30, paddingVertical: 20}}>
-        Houses For Sale {products.length}
-      </Text>
       <View style={styles.container}>
         {products.map((item, index) => {
           return (
@@ -63,26 +70,51 @@ export default function Houses({navigation}) {
                 }}>
                 <Text
                   style={{ fontWeight: 'bold', fontSize: 16, color: '#000000eb' }}>
-                <Text style={{fontWeight: '900', fontFamily: 'Montserrat-Bold'}}>Price:</Text> {item.Price} PKR
+                  <Text style={{ fontWeight: '900', fontFamily: 'Montserrat-Bold' }}>Price:</Text> {item.Price} PKR
                 </Text>
 
-                  <Button mode="contained" icon={'chevron-right'} contentStyle={{flexDirection: 'row-reverse', justifyContent: 'center', alignItems: 'center'}}  labelStyle={{fontSize: 15}} style={{borderRadius: 7, padding: 2}} buttonColor="#000000e5" onPress={() => navigation.navigate('Item', {item})}>
-                    See More
-                  </Button>
+                <Button mode="contained" icon={'chevron-right'} contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'center', alignItems: 'center' }} labelStyle={{ fontSize: 15 }} style={{ borderRadius: 7, padding: 2 }} buttonColor="#000000e5" onPress={() => navigation.navigate('Item', { item })}>
+                  See More
+                </Button>
               </View>
             </View>
           );
         })}
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    alignItems: 'center',
+    height: '100%',
+    marginTop: 20,
+    backgroundColor: 'white'
+},
+navigation: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  padding: 20,
+},
+iconContainer: {
+    width: 40,
+    height: 40,
     justifyContent: 'center',
-  },
+    alignItems: 'center',
+},
+header: {
+    fontWeight: 'normal',
+    fontSize: 24,
+    fontFamily: 'Montserrat-Bold',
+    color: '#030303',
+    marginLeft: 20,
+},
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   item: {
     width: screenWidth - 40,
     height: screenWidth - 100,

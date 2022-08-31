@@ -1,0 +1,74 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { Button } from 'react-native-paper';
+import call from 'react-native-phone-call';
+import Modal from 'react-native-modal';
+const MakeCall = () => {
+
+    const [isModalVisible, setModalVisible] = useState(false);
+
+    const toggleModal = () => {
+        setModalVisible(!isModalVisible);
+    };
+
+    const args = {
+        number: '0310-7513045', // Use commas to add time between digits.
+        prompt: true,
+    };
+
+    const MakeCall = () => {
+        call(args).catch((err) => console.log(err));
+    };
+    const handleModal = () => {
+        toggleModal();
+    };
+    return (<>
+        <TouchableOpacity style={styles.callContainer}>
+            <Button mode="contained" icon={'phone-dial'} labelStyle={styles.label} style={styles.callBtn} onPress={handleModal}>Call</Button>
+        </TouchableOpacity>
+        <View>
+            <Modal isVisible={isModalVisible}  animationIn={'fadeInLeft'} swipeDirection={'right'} style={{ backgroundColor: 'white',borderRadius: 10, maxHeight: 250, marginTop: '60%'}}>
+                <View style={styles.modal}>
+                    <Text style={[styles.label, {color:'black', fontSize: 35}]}>Make a Call ?</Text>
+                    <View style={styles.btnSection}>
+                        <Button mode="contained" icon={'phone-cancel'} style={[styles.callBtn, {padding: 4, backgroundColor: 'red', width: 120}]} onPress={toggleModal}>Cancle</Button>
+                        <Button mode="contained" icon={'phone'} style={[styles.callBtn, {padding: 4, width: 120}]} onPress={MakeCall}>Call</Button>
+                    </View>
+                </View>
+            </Modal>
+        </View>
+    </>
+    );
+};
+
+export default MakeCall;
+
+const styles = StyleSheet.create({
+    callContainer: {
+        marginBottom: 20,
+        paddingHorizontal: 30,
+    },
+    callBtn: {
+        borderRadius: 7,
+        backgroundColor: '#000000db',
+    },
+    label: {
+        fontFamily: 'Montserrat-Bold',
+        padding: 4,
+        fontSize: 20,
+    },
+    modal: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    btnSection: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        padding:30,
+    },
+});

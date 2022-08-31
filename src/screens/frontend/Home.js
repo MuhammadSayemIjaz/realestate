@@ -6,10 +6,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyCarousel from '../../components/MyCarousel';
 import Demo from '../../assets/images/Demo.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBarsStaggered, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 
-const Home = ({navigation}) => {
-    const [isPressed , setIsPressed] = useState(false);
+const Home = ({ navigation }) => {
+    const [isPressed, setIsPressed] = useState(false);
     const handleIcon = () => {
         setIsPressed(true);
     };
@@ -20,30 +20,34 @@ const Home = ({navigation}) => {
                     <View style={styles.container}>
                         <View style={{
                             flexDirection: 'row',
-                            justifyContent: 'space-between'
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            paddingHorizontal: 30,
                         }}>
-                            <TouchableOpacity onPress={handleIcon}>
-                                <FontAwesomeIcon icon={isPressed ? faXmark :  faBarsStaggered} size={32} color={'#00aeef'} />
+                            <TouchableOpacity onPress={handleIcon} style={{ marginBottom: 5 }}>
+                                <FontAwesomeIcon icon={faBarsStaggered} size={23} color={'#000000'} />
                             </TouchableOpacity>
-                            <Ionicons  name="person-circle-outline" size={32} color={'#00aeef'} />
+                            <TouchableOpacity>
+                                <Ionicons name="person-circle-outline" size={33} color={'#000000'} />
+                            </TouchableOpacity>
                         </View>
-                        <View style={{ paddingVertical: 13 }}>
+                        <View style={{ paddingVertical: 13, paddingHorizontal: 25 }}>
                             <Text style={styles.headerStyle}>
                                 Find Your Best Property</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <View style={{ backgroundColor: '#00afef35', flexDirection: 'row', borderRadius: 10, width: '83%' }}>
-                                <Ionicons name="search-outline" size={20} style={{ padding: 10, marginTop: 2 }} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 25 }}>
+                            <View style={{ backgroundColor: '#00000015', flexDirection: 'row', borderRadius: 10, width: '83%' }}>
+                                <Ionicons name="search" color={'#000000'} size={23} style={{ padding: 10, marginTop: 2 }} />
                                 <TextInput placeholder="Search..." />
                             </View>
-                            <View style={{ backgroundColor: '#00aeef', width: '15%', padding: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
+                            <View style={{ backgroundColor: '#000000', width: '15%', padding: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
                                 <TouchableOpacity>
                                     <Ionicons name="options-outline" color="#fff" size={20} />
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ScrollView style={{ width: '100%', height: 400 }}>
-                            <View style={{ marginTop: 20, borderRadius: 10 }}>
+                        <ScrollView style={{ width: '100%', height: '76%', marginVertical: 30, paddingHorizontal: 25 }}>
+                            <View style={{ borderRadius: 10 }}>
                                 <Image source={Demo}
                                     style={{
                                         width: '100%',
@@ -53,9 +57,20 @@ const Home = ({navigation}) => {
                             </View>
                             <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Text variant="titleLarge" style={styles.headerStyle}>Recommended For You</Text>
-                                <Text style={styles.smallHeadingStyle}>View All</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('AllHouses')}>
+                                    <Text style={styles.smallHeadingStyle}>View All <Ionicons name="chevron-forward" size={14} /></Text>
+                                </TouchableOpacity>
                             </View>
-                            <View style={{ marginTop: 20, }}>
+                            <View style={{ marginVertical: 20 }}>
+                                <MyCarousel />
+                            </View>
+                            <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Text variant="titleLarge" style={styles.headerStyle}>Suggested for You</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('AllHouses')}>
+                                    <Text style={styles.smallHeadingStyle}>View All <Ionicons name="chevron-forward" size={14} /></Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ marginVertical: 20 }}>
                                 <MyCarousel />
                             </View>
                         </ScrollView>
@@ -70,9 +85,9 @@ export default Home;
 
 const styles = StyleSheet.create({
     safeArea: {
-        padding: 15,
-        paddingHorizontal: 25,
+        paddingVertical: 15,
         flex: 1,
+        marginTop: 35,
     },
     container: {
         width: '100%',

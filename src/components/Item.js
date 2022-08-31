@@ -2,86 +2,90 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Demo from '../assets/images/Demo.jpg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBath, faBed, faBellConcierge, faKitchenSet, faRestroom, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faBath, faBellConcierge, faKitchenSet, faRestroom, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import MakeCall from './MakeCall';
 
-const Item = () => {
+const Item = ({ navigation, route }) => {
+    // console.log(route.params);
+    const { item: { Url, Title, Location, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } } = route.params;
+    const handleData = () => {
+        console.log({ Title, Location, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc });
+    };
     return (
         <SafeAreaView style={styles.safeArea}>
             <StatusBar backgroundColor="transparent" barStyle={'light-content'} translucent />
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
-                    <Image source={Demo} style={styles.image} />
+                    <Image source={{ uri: Url }} style={styles.image} />
                     <View style={styles.navigation}>
-                        <TouchableOpacity style={styles.iconContainer}>
+                        <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.goBack()}>
                             <Ionicons name="chevron-back" size={25} color="#555355" />
                         </TouchableOpacity>
                         <View>
                             <Text style={styles.header}>Details</Text>
                         </View>
-                        <TouchableOpacity style={styles.iconContainer}>
+                        <TouchableOpacity style={styles.iconContainer} onPress={handleData}>
                             <Ionicons name="heart-outline" size={25} color="#555355" />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.imageTextContainer}>
-                        <Text style={styles.title}>Image Title</Text>
+                        <Text style={styles.title}>{Title}</Text>
                         <View style={styles.locationContainer} >
                             <Ionicons name="location-outline" size={20} color="#ffffff" />
-                            <Text style={[styles.title, { fontSize: 15 }]}> Image Location</Text>
+                            <Text style={[styles.title, { fontSize: 15, marginLeft: 8 }]}>{Location}</Text>
                         </View>
                     </View>
                 </View>
                 <ScrollView>
-                <View style={styles.priceContainer}>
-                    <View style={styles.priceSection}>
-                        <Text style={[styles.title, { color: '#333333' }]}>1,1193 PKR /</Text>
-                        <Text style={[styles.title, { fontSize: 17, color: '#8f9294' }]}> month</Text>
-                    </View>
-                    <View style={styles.ratingSection}>
-                        <Ionicons name="star" size={25} color={'#FFD958'} />
-                        <Text style={[styles.title, { fontSize: 20, color: '#333333' }]}>4.5</Text>
-                    </View>
-                </View>
-                <View style={styles.facilitiesContainer}>
-                    <View style={styles.facilitiesSection}>
-                        <View style={styles.facilities}>
-                            <Ionicons name="bed" size={35} color="#000000db" />
-                            <Text style={styles.text}>2 Bed</Text>
+                    <View style={styles.priceContainer}>
+                        <View style={styles.priceSection}>
+                            <Text style={[styles.title, { color: '#333333' }]}>{Price} PKR /</Text>
+                            <Text style={[styles.title, { fontSize: 17, color: '#8f9294' }]}> month</Text>
                         </View>
-                        <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
-                        <View style={styles.facilities}>
-                            <FontAwesomeIcon icon={faBath} size={30} color="#000000db" />
-                            <Text style={styles.text}>2 Bath</Text>
-                        </View>
-                        <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
-                        <View style={styles.facilities}>
-                            <FontAwesomeIcon icon={faRestroom} size={30} color="#000000db" />
-                            <Text style={styles.text}>2 Rooms</Text>
-                        </View>
-                        <View style={styles.facilities}>
-                            <FontAwesomeIcon icon={faBellConcierge} size={30} color="#000000db" />
-                            <Text style={styles.text}>2 Bed</Text>
-                        </View>
-                        <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
-                        <View style={styles.facilities}>
-                            <FontAwesomeIcon icon={faUtensils} size={30} color="#000000db" />
-                            <Text style={styles.text}>2 Bed</Text>
-                        </View>
-                        <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
-                        <View style={styles.facilities}>
-                            <FontAwesomeIcon icon={faKitchenSet} size={30} color="#000000db" />
-                            <Text style={styles.text}>2 Bed</Text>
+                        <View style={styles.areaSection}>
+                            {/* <Ionicons name="star" size={25} color={'#FFD958'} /> */}
+                            <Text style={[styles.title, { fontSize: 20, color: '#333333' }]}>{Area}</Text>
                         </View>
                     </View>
-                </View>
-                <View style={styles.descContainer}>
-                    <Text style={[styles.header , {color: '#333333'}]}>Description</Text>
-                    <Text style={styles.content}>
-                    Faisalabad has evolved as a hub for a multitude of innovative and remarkable real estate ventures. The city is among the fastest developing metropolitans in the country, with an ever-increasing need for new and enhanced living spaces. The West Canal Residences is a well-constructed and planned mixed-use project located on the Canal Expressway, fulfilling the gap in the demand and supply of quality homes. The project's location alone is a big factor that has caught the interest of investors from around the country.
-                    </Text>
-                </View>
+                    <View style={styles.facilitiesContainer}>
+                        <View style={styles.facilitiesSection}>
+                            <View style={styles.facilities}>
+                                <Ionicons name="bed" size={35} color="#000000db" />
+                                <Text style={styles.text}>{Bedrooms} Bed</Text>
+                            </View>
+                            <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
+                            <View style={styles.facilities}>
+                                <FontAwesomeIcon icon={faBath} size={30} color="#000000db" />
+                                <Text style={styles.text}>{Bathrooms} Bath</Text>
+                            </View>
+                            <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
+                            <View style={styles.facilities}>
+                                <FontAwesomeIcon icon={faRestroom} size={30} color="#000000db" />
+                                <Text style={styles.text}>{Rooms} Rooms</Text>
+                            </View>
+                            <View style={styles.facilities}>
+                                <FontAwesomeIcon icon={faBellConcierge} size={30} color="#000000db" />
+                                <Text style={styles.text}>{Reception} Recep</Text>
+                            </View>
+                            <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
+                            <View style={styles.facilities}>
+                                <FontAwesomeIcon icon={faUtensils} size={30} color="#000000db" />
+                                <Text style={styles.text}>{DRoom} Dining</Text>
+                            </View>
+                            <View style={{ borderWidth: 1, borderColor: '#F6F7F9', height: 30 }} />
+                            <View style={styles.facilities}>
+                                <FontAwesomeIcon icon={faKitchenSet} size={30} color="#000000db" />
+                                <Text style={styles.text}>{Kitchen} Kitchen</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.descContainer}>
+                        <Text style={[styles.header, { color: '#333333' }]}>Description</Text>
+                        <Text style={styles.content}>{Desc}</Text>
+                    </View>
+                    <MakeCall />
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -129,7 +133,7 @@ const styles = StyleSheet.create({
     },
     header: {
         fontWeight: 'normal',
-        fontSize: 20,
+        fontSize: 24,
         fontFamily: 'Montserrat-Bold',
         color: '#ffff',
     },
@@ -143,13 +147,12 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'normal',
-        fontSize: 23,
+        fontSize: 20,
         fontFamily: 'Montserrat-Bold',
         color: '#ffff',
     },
     locationContainer: {
         marginTop: 20,
-        marginRight: 15,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -165,7 +168,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '45%',
     },
-    ratingSection: {
+    areaSection: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -193,12 +196,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: 12,
     },
-    text:{
+    text: {
         fontFamily: 'Montserrat-Bold',
         fontSize: 12,
         marginHorizontal: 5,
     },
-    descContainer:{
+    descContainer: {
         marginVertical: 30,
         paddingHorizontal: 20,
     },

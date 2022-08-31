@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -11,6 +11,8 @@ import ForgotPassword from '../screens/auth/ForgotPassword';
 import Home from '../screens/frontend/Home';
 import AddProduct from '../screens/frontend/AddProduct';
 import Favourites from '../screens/frontend/Favourites';
+import AllHouses from '../screens/frontend/AllHouses';
+import Suggested from '../screens/frontend/Suggested';
 import Item from '../components/Item';
 
 const Tab = createBottomTabNavigator();
@@ -42,14 +44,14 @@ const MyTabs = () => {
         tabBarBadgeStyle: { backgroundColor: '#ffff', fontWeight: '900' },
     })}>
         <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="AddProduct" component={Item} />
+        <Tab.Screen name="AddProduct" component={AddProduct} />
         <Tab.Screen name="Favourites" component={Favourites} options={{ tabBarBadge: 3 }} />
     </Tab.Navigator>);
 };
 const AppNavigation = () => {
     return (
         <NavigationContainer>
-            <StatusBar barStyle="dark-content"
+            <StatusBar barStyle="dark-content" translucent
                 backgroundColor="#eeeeeef8" />
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -58,6 +60,9 @@ const AppNavigation = () => {
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Register" component={Register} />
                     <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                    <Stack.Screen name="Item" component={Item}/>
+                    <Stack.Screen name="AllHouses" component={AllHouses}/>
+                    <Stack.Screen name="Suggesetd" component={Suggested}/>
                 </Stack.Group>
             </Stack.Navigator>
         </NavigationContainer>
