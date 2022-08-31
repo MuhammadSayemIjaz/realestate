@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import call from 'react-native-phone-call';
 import Modal from 'react-native-modal';
-const MakeCall = () => {
+const MakeCall = ({PhoneNo}) => {
 
     const [isModalVisible, setModalVisible] = useState(false);
 
@@ -14,12 +14,13 @@ const MakeCall = () => {
     };
 
     const args = {
-        number: '0310-7513045', // Use commas to add time between digits.
+        number: PhoneNo, // Use commas to add time between digits.
         prompt: true,
     };
 
-    const MakeCall = () => {
+    const MakingCall = () => {
         call(args).catch((err) => console.log(err));
+        toggleModal();
     };
     const handleModal = () => {
         toggleModal();
@@ -34,7 +35,7 @@ const MakeCall = () => {
                     <Text style={[styles.label, {color:'black', fontSize: 35}]}>Make a Call ?</Text>
                     <View style={styles.btnSection}>
                         <Button mode="contained" icon={'phone-cancel'} style={[styles.callBtn, {padding: 4, backgroundColor: 'red', width: 120}]} onPress={toggleModal}>Cancle</Button>
-                        <Button mode="contained" icon={'phone'} style={[styles.callBtn, {padding: 4, width: 120}]} onPress={MakeCall}>Call</Button>
+                        <Button mode="contained" icon={'phone'} style={[styles.callBtn, {padding: 4, width: 120}]} onPress={MakingCall}>Call</Button>
                     </View>
                 </View>
             </Modal>

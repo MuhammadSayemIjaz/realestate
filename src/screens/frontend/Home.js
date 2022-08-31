@@ -46,7 +46,7 @@ const Home = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <ScrollView style={{ width: '100%', height: '76%', marginVertical: 30, paddingHorizontal: 25 }}>
+                        <ScrollView style={{ width: '100%', height: '76%', marginVertical: 20, paddingHorizontal: 25 }}>
                             <View style={{ borderRadius: 10 }}>
                                 <Image source={Demo}
                                     style={{

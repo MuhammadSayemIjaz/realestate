@@ -9,9 +9,9 @@ import MakeCall from './MakeCall';
 
 const Item = ({ navigation, route }) => {
     // console.log(route.params);
-    const { item: { Url, Title, Location, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } } = route.params;
+    const { item: { Url, Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } } = route.params;
     const handleData = () => {
-        console.log({ Title, Location, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc });
+        console.log({ Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc });
     };
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -85,7 +85,7 @@ const Item = ({ navigation, route }) => {
                         <Text style={[styles.header, { color: '#333333' }]}>Description</Text>
                         <Text style={styles.content}>{Desc}</Text>
                     </View>
-                    <MakeCall />
+                    <MakeCall PhoneNo={PhoneNo} />
                 </ScrollView>
             </View>
         </SafeAreaView>

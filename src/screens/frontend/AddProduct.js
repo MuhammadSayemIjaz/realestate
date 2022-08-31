@@ -2,7 +2,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { TextInput, Button } from 'react-native-paper';
@@ -10,6 +10,7 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { source } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
 const AddProduct = ({ navigation }) => {
   const initialState = {
@@ -32,9 +33,10 @@ const AddProduct = ({ navigation }) => {
   const [image, setImage] = useState('');
   const [url, setUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isImageUpload , setIsImageUpload] = useState(false);
 
   const handleChange = (name, val) => {
-      setState(s => ({ ...s, [name]: val }));
+    setState(s => ({ ...s, [name]: val }));
   };
 
   const handleAddHouse = async () => {
@@ -43,7 +45,7 @@ const AddProduct = ({ navigation }) => {
       .ref(`images/${image.fileName}`)
       .putFile(image.uri)
       .then(async () => {
-      const url = await storage()
+        const url = await storage()
           .ref(`images/${image.fileName}`)
           .getDownloadURL();
         setUrl(url);
@@ -51,10 +53,11 @@ const AddProduct = ({ navigation }) => {
       .catch(err => {
         console.error(err);
       });
-    const { Title, Location, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } = state;
+    const { Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } = state;
     const ProductData = {
       Title: Title,
       Location: Location,
+      PhoneNo: PhoneNo,
       Price: Price,
       PType: PType,
       Area: Area,
@@ -95,19 +98,27 @@ const AddProduct = ({ navigation }) => {
       } else if (response.customButton) {
         console.log('Image Picker Error => ', response.customButton);
       } else {
-        setImage(response.assets[0]);
+        // const source = {uri: 'data:image/jpeg;base64' + response.base64};
+        setImage(response.assets[0].uri);
       }
+      alert(image);
+      setIsImageUpload(true);
     });
-    alert('Images Gallery is Opened');
   };
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={{ flex: 1 }}>
         <View style={styles.Card}>
           <TouchableOpacity activeOpacity={0.5} onPress={OpenImageGallery}>
+            { isImageUpload ?
             <View style={styles.ImageContainer}>
-              <Ionicon name={'camera'} size={90} color={'#000000db'} />
+              <Image source={{ uri: image}} style={styles.ImageContainer}/>
             </View>
+            :
+            <View style={styles.ImageContainer}>
+              <Ionicon name={'camera'} size={90} color={'#000000bd'} />
+            </View>
+            }
           </TouchableOpacity>
           <View style={styles.inputContainer}>
             <TextInput
@@ -123,6 +134,15 @@ const AddProduct = ({ navigation }) => {
               label={'Location'}
               onChangeText={(val) => handleChange('Location', val)}
               keyboardType="numbers-and-punctuation"
+            />
+            <TextInput
+              style={styles.input}
+              mode="fill"
+              label={'Phone No'}
+              onChangeText={(val) => handleChange('PhoneNo', val)}
+              keyboardType="numbers-pad"
+              maxLength={12}
+              placeholder={'0000-0000000'}
             />
             <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
               <TextInput
@@ -216,7 +236,7 @@ const AddProduct = ({ navigation }) => {
               numberOfLines={4}
             />
             <TouchableOpacity activeOpacity={0.7}>
-              <Button mode="contained" labelStyle={{ fontSize: 18, fontFamily: 'Montserrat-Medium' }} style={styles.btn} loading={isLoading} onPress={handleAddHouse} > {!isLoading && <Icon name="home-plus" size={20} color="#ffff" /> } Add Property</Button>
+              <Button mode="contained" labelStyle={{ fontSize: 18, fontFamily: 'Montserrat-Medium' }} style={styles.btn} loading={isLoading} onPress={handleAddHouse} > {!isLoading && <Icon name="home-plus" size={20} color="#ffff" />} Add Property</Button>
             </TouchableOpacity>
           </View>
         </View>
