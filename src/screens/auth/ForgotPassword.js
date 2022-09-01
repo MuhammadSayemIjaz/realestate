@@ -5,6 +5,7 @@ import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'r
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import ResetPass from '../../assets/images/ResetPass.png';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -57,14 +58,15 @@ const ForgotPassword = ({ navigation }) => {
                                 mode="contained"
                                 icon={'send'}
                                 loading={isProcessing} disabled={isProcessing} onPress={handleSend}
-                            ><Text style={styles.loginText}>Login</Text>
+                            ><Text style={styles.loginText}>Send Email</Text>
                             </Button>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.bottomSection}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-                        <Text style={styles.text}>Back to Login</Text>
+                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={() => navigation.navigate('Login')}>
+                        <Text style={[styles.text, {marginRight: 3}]}>Back to Login</Text>
+                        <Ionicons name="enter-outline" color={'#000000'} size={20}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -128,5 +130,6 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontSize: 17,
         fontFamily: 'Montserrat-Medium',
+        alignItems: 'center',
     },
 });
