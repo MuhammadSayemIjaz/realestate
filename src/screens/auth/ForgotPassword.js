@@ -1,17 +1,19 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
+import ResetPass from '../../assets/images/ResetPass.png';
 
 const ForgotPassword = ({ navigation }) => {
     const [email, setEmail] = useState('');
-    const [isProcess, setIsProcess] = useState(false);
+    const [isProcessing, setIsProcessing] = useState(false);
+
     const handleSend = () => {
-        setIsProcess(true);
+        setIsProcessing(true);
         if (!email) {
-            setIsProcess(false);
+            setIsProcessing(false);
             // return (Toast.show({
             //     type: 'error',
             //     text1: "Invalid Email",
@@ -22,7 +24,7 @@ const ForgotPassword = ({ navigation }) => {
             // }))
         }
         auth().sendPasswordResetEmail(email).then(() => {
-            setIsProcess(false);
+            setIsProcessing(false);
             // Toast.show({
             //     type: 'success',
             //     text1: "Email Send",
@@ -35,78 +37,96 @@ const ForgotPassword = ({ navigation }) => {
         }).catch(err => console.log(err));
     };
     return (
-        <View style={styles.container}>
-            <View style={styles.content}>
-                <Text style={styles.header}>Forgot Password</Text>
-                <View style={styles.formSection}>
-                    <TextInput
-                        style={styles.input}
-                        mode="fill"
-                        label={'Email'}
-                        keyboardType="email-address"
-                        left={<TextInput.Icon icon="email" iconColor={'#00aeef'} />}
-                    />
-                    <TouchableOpacity
-                        onPress={handleSend}>
-                        <Button style={styles.btn}
-                            mode="contained"
-                            icon={'email-send'}
-                            labelStyle={{ fontSize: 20, fontWeight: '900' }}
-                        >Send
-                        </Button>
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+                <View style={styles.content}>
+                    <Image source={ResetPass} style={{alignItems: 'center'}}/>
+                    <Text style={styles.header}>Forgot Password</Text>
+                    <Text style={[styles.text, {paddingTop: 20, paddingHorizontal: 30, fontFamily: 'Montserrat-Light'}]}>Don't worry! It happens. Please enter the Email Address Associated with your account. </Text>
+                    <View style={styles.formSection}>
+                        <TextInput
+                            style={styles.input}
+                            mode="outlined"
+                            label={'Email'}
+                            onChangeText={(value) => setEmail(value)}
+                            keyboardType="email-address"
+                            left={<TextInput.Icon icon="at" iconColor="#000000" />}
+                        />
+                        <TouchableOpacity>
+                            <Button style={styles.btn}
+                                mode="contained"
+                                icon={'send'}
+                                loading={isProcessing} disabled={isProcessing} onPress={handleSend}
+                            ><Text style={styles.loginText}>Login</Text>
+                            </Button>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={styles.bottomSection}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.text}>Back to Login</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={styles.bottomSection}>
-                <TouchableOpacity>
-                    <Button mode="text" textColor="white" labelStyle={{ fontSize: 20 }} onPress={() => navigation.navigate('Login')} >Back to Login ?</Button>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
 export default ForgotPassword;
 
 const styles = StyleSheet.create({
-    bgImage: {
+    safeArea:{
+        backgroundColor: '#fff',
         flex: 1,
-        width: '100%',
-        height: '100%',
     },
     container: {
         flex: 1,
-        fontFamily: 'Poppins',
         alignItems: 'center',
         justifyContent: 'center',
     },
     content: {
+        alignItems: 'center',
         width: '100%',
         marginTop: 60,
     },
     header: {
-        fontSize: 30,
-        fontWeight: '700',
-        color: '#ffff',
-        textAlign: 'center',
+        marginTop: 30,
+        fontSize: 55,
+        color: '#000000',
+        fontFamily: 'Montserrat-Bold',
     },
     formSection: {
         width: '100%',
         paddingHorizontal: 40,
-        marginTop: 30,
+        marginTop: 10,
+        marginBottom: 20,
     },
     input: {
-        marginVertical: 15,
-        backgroundColor: '#ffff',
+        marginVertical: 10,
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 18,
+        padding: 4,
     },
     btn: {
-        borderRadius: 3,
+        borderRadius: 7,
         marginTop: 15,
         padding: 6,
     },
-
+    loginText: {
+        fontSize: 20,
+        letterSpacing: 1,
+        color: '#ffff',
+        fontFamily: 'Montserrat-Bold',
+    },
     bottomSection: {
-        marginTop: 60,
+        marginTop: 20,
         paddingHorizontal: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text: {
+        color: '#000000',
+        fontSize: 17,
+        fontFamily: 'Montserrat-Medium',
     },
 });

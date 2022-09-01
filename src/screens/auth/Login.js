@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { Image, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import { useAuthContext } from '../../context/AuthContext';

@@ -73,10 +73,10 @@ const AppNavigation = () => {
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Group>
+                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen name="frontend" component={MyTabs} />
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Register" component={Register} />
-                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen name="Item" component={Item}/>
                     <Stack.Screen name="AllHouses" component={AllHouses}/>
                     <Stack.Screen name="Suggesetd" component={Suggested}/>
