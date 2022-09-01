@@ -14,10 +14,26 @@ import Favourites from '../screens/frontend/Favourites';
 import AllHouses from '../screens/frontend/AllHouses';
 import Suggested from '../screens/frontend/Suggested';
 import Item from '../components/Item';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+// const Drawer = createDrawerNavigator();
 
+
+
+// const MyDrawer = ()=>{
+// return (
+//     <Drawer.Navigator>
+// <Drawer.Screen name="Home" component={Home} />
+
+
+
+//     </Drawer.Navigator>
+// );
+
+
+// };
 const MyTabs = () => {
     return (<Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size, color }) => {

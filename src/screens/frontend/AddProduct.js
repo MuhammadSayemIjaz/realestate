@@ -10,28 +10,27 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { source } from 'deprecated-react-native-prop-types/DeprecatedImagePropType';
 
+const initialState = {
+  Title: '',
+  Location: '',
+  Price: '',
+  PType: '',
+  Area: '',
+  FType: '',
+  Bedrooms: '',
+  Bathrooms: '',
+  Rooms: '',
+  Reception: '',
+  DRoom: '',
+  Kitchen: '',
+  Desc: '',
+  Url: '',
+};
 const AddProduct = ({ navigation }) => {
-  const initialState = {
-    Title: '',
-    Location: '',
-    Price: '',
-    PType: '',
-    Area: '',
-    FType: '',
-    Bedrooms: '',
-    Bathrooms: '',
-    Rooms: '',
-    Reception: '',
-    DRoom: '',
-    Kitchen: '',
-    Desc: '',
-    Url: '',
-  };
   const [state, setState] = useState(initialState);
-  const [image, setImage] = useState('');
-  const [url, setUrl] = useState('');
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isImageUpload , setIsImageUpload] = useState(false);
 
@@ -43,12 +42,13 @@ const AddProduct = ({ navigation }) => {
     setIsLoading(true);
     await storage()
       .ref(`images/${image.fileName}`)
-      .putFile(image.uri)
+      .putFile(image)
       .then(async () => {
-        const url = await storage()
+        const imageUrl = await storage()
           .ref(`images/${image.fileName}`)
           .getDownloadURL();
-        setUrl(url);
+        setUrl(imageUrl);
+        alert(imageUrl);
       })
       .catch(err => {
         console.error(err);
@@ -71,7 +71,11 @@ const AddProduct = ({ navigation }) => {
       Desc: Desc,
       Url: url,
     };
-    console.log(ProductData);
+    if (ProductData.Url === null){
+      alert('Please Select Image');
+      return state;
+    } else{
+    alert(`ProductData Url => ${ProductData.Url}`);
     await firestore()
       .collection('Property')
       .add(ProductData)
@@ -79,7 +83,9 @@ const AddProduct = ({ navigation }) => {
         console.log('Property added!');
         alert('Property Added Succesfully');
         setIsLoading(false);
+        setState(initialState);
       });
+    }
   };
   const OpenImageGallery = () => {
     const options = {
@@ -101,7 +107,6 @@ const AddProduct = ({ navigation }) => {
         // const source = {uri: 'data:image/jpeg;base64' + response.base64};
         setImage(response.assets[0].uri);
       }
-      alert(image);
       setIsImageUpload(true);
     });
   };

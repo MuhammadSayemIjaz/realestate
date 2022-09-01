@@ -9,12 +9,12 @@ import {
   Platform,
   Text,
 } from 'react-native';
-import {  Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import React, { useEffect, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const { width: screenWidth } = Dimensions.get('window');
-export default function Houses({navigation}) {
+export default function Houses({ navigation }) {
   const [products, setProducts] = useState([]);
 
   const ProductData = () => {
@@ -38,7 +38,7 @@ export default function Houses({navigation}) {
   return (
     <ScrollView style={{ backgroundColor: '#fff', padding: 20 }}>
       <Text
-        style={{ fontWeight: 'bold', textAlign: 'center', color: 'black',  fontSize: 30, paddingVertical: 20}}>
+        style={{ fontWeight: 'bold', textAlign: 'center', color: 'black', fontSize: 30, paddingVertical: 20 }}>
         Houses For Sale {products.length}
       </Text>
       <View style={styles.container}>
@@ -63,12 +63,11 @@ export default function Houses({navigation}) {
                 }}>
                 <Text
                   style={{ fontWeight: 'bold', fontSize: 16, color: '#000000eb' }}>
-                <Text style={{fontWeight: '900', fontFamily: 'Montserrat-Bold'}}>Price:</Text> {item.Price} PKR
+                  <Text style={{ fontWeight: '900', fontFamily: 'Montserrat-Bold' }}>Price:</Text> {item.Price} PKR
                 </Text>
-
-                  <Button mode="contained" icon={'chevron-right'} contentStyle={{flexDirection: 'row-reverse', justifyContent: 'center', alignItems: 'center'}}  labelStyle={{fontSize: 15}} style={{borderRadius: 7, padding: 2}} buttonColor="#000000e5" onPress={() => navigation.navigate('Item', {item})}>
-                    See More
-                  </Button>
+                <Button mode="contained" icon={'chevron-right'} contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'center', alignItems: 'center' }} labelStyle={{ fontSize: 15 }} style={{ borderRadius: 7, padding: 2 }} buttonColor="#000000e5" onPress={() => navigation.navigate('Item', { item })}>
+                  See More
+                </Button>
               </View>
             </View>
           );

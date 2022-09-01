@@ -1,10 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
-import Bg from '../../assets/images/Bg.png';
+import { Image, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TextInput, Button, Text } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import { useAuthContext } from '../../context/AuthContext';
+import login from '../../assets/images/login1.png';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const initialState = { email: '', password: '' };
 
@@ -24,8 +26,8 @@ const Login = ({ navigation }) => {
     const handleLogin = () => {
         let { email, password } = state;
 
-        if (!email) {return alert('Email is invalid');}
-        if (!password) {return alert('Password is invalid');}
+        if (!email) { return alert('Email is invalid'); }
+        if (!password) { return alert('Password is invalid'); }
 
         setIsProcessing(true);
 
@@ -54,28 +56,30 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <ImageBackground source={Bg} style={styles.bgImage}>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView style={{height: '100%'}}>
             <View style={styles.container}>
                 <View style={styles.content}>
+                    <Image source={login} style={styles.image} />
                     <Text style={styles.header}>LOGIN</Text>
                     <Text style={styles.heading}>Welcome Back !</Text>
                     <View style={styles.formSection}>
                         <TextInput
                             style={styles.input}
-                            mode="fill"
+                            mode="outlined"
                             label={'Email'}
                             onChangeText={value => handleChange('email', value)}
                             keyboardType="email-address"
-                            left={<TextInput.Icon icon="email" iconColor={'#00aeef'} />}
+                            left={<TextInput.Icon icon="at" iconColor="#000000" />}
                         />
                         <TextInput
                             style={styles.input}
-                            mode="fill"
+                            mode="outlined"
                             label={'Password'}
                             onChangeText={value => handleChange('password', value)}
                             secureTextEntry={isPasswordShow ? false : true}
-                            right={<TextInput.Icon iconColor={'#00aeef'} name={isPasswordShow ? 'eye' : 'eye-off'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}
-                            left={<TextInput.Icon icon="lock" iconColor={'#00aeef'} />}
+                            right={<TextInput.Icon iconColor="#000000" name={isPasswordShow ? 'eye' : 'eye-off'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}
+                            left={<TextInput.Icon icon="lock"  iconColor="#000000"/>}
                         />
                         <TouchableOpacity>
                             <Button style={styles.btn}
@@ -85,71 +89,77 @@ const Login = ({ navigation }) => {
                             ><Text style={styles.loginText}>Login</Text>
                             </Button>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{marginTop: 20}}>
-                        <Button mode="text" textColor="white" onPress={()=> navigation.navigate('ForgotPassword')} >Forgot Password !</Button>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.bottomSection} onPress={() => navigation.navigate('ForgotPassword')}>
+                            <Text style={styles.text}>Forgot Password !</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.bottomSection}>
-                    <TouchableOpacity>
-                        <Button mode="text" textColor="white" onPress={()=> navigation.navigate('Register')} >Don't have an Account !</Button>
+                    <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                        <Text style={styles.text}>Don't have an Account?</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </ImageBackground>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 
 export default Login;
 
 const styles = StyleSheet.create({
-    bgImage: {
+    safeArea:{
+        backgroundColor: '#fff',
         flex: 1,
-        width: '100%',
-        height: '100%',
     },
-    container: {
-        flex: 1,
-        fontFamily: 'Poppins',
+    image: {
+        borderRadius: 10,
     },
     content: {
-        flex: 1,
         alignItems: 'center',
         width: '100%',
-        marginTop: 60,
+        marginTop: 30,
     },
     heading: {
-        fontSize: 26,
+        fontSize: 30,
         marginTop: 30,
-        fontWeight: 'bold',
-        color: '#ffff',
+        fontFamily: 'Montserrat-Bold',
     },
-    header:{
+    header: {
+        marginTop: 30,
         fontSize: 40,
-        fontWeight: '700',
-        color: '#ffff',
+        fontFamily: 'Montserrat-ExtraBold',
     },
     formSection: {
         width: '100%',
-        paddingHorizontal: 40,
+        paddingHorizontal: 30,
         marginTop: 30,
     },
     input: {
-        marginVertical: 15,
-        backgroundColor: '#ffff',
+        marginVertical: 10,
+        fontFamily: 'Montserrat-Bold',
+        fontSize: 18,
+        padding: 4,
     },
     btn: {
-        borderRadius: 3,
+        borderRadius: 7,
         marginTop: 15,
         padding: 6,
     },
     loginText: {
         fontSize: 20,
         letterSpacing: 1,
-        fontWeight: '900',
+        color: '#ffff',
+        fontFamily: 'Montserrat-Bold',
     },
     bottomSection: {
+        marginTop: 30,
         paddingHorizontal: 50,
-        marginBottom: 20,
+        justifyContent: 'center',
+        alignItems:'center',
+    },
+    text: {
+        fontSize: 15,
+        fontFamily: 'Montserrat-Medium',
     },
 });
