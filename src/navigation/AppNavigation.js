@@ -14,6 +14,7 @@ import Favourites from '../screens/frontend/Favourites';
 import AllHouses from '../screens/frontend/AllHouses';
 import Suggested from '../screens/frontend/Suggested';
 import Item from '../components/Item';
+import Filter from '../components/Filter'
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Tab = createBottomTabNavigator();
@@ -79,6 +80,7 @@ const AppNavigation = () => {
                     <Stack.Screen name="Item" component={Item}/>
                     <Stack.Screen name="AllHouses" component={AllHouses}/>
                     <Stack.Screen name="Suggesetd" component={Suggested}/>
+                    <Stack.Screen name="Filter" component={Filter}/>
                 </Stack.Group>
             </Stack.Navigator>
         </NavigationContainer>

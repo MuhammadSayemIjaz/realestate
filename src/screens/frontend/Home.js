@@ -35,17 +35,18 @@ const Home = ({ navigation }) => {
                             <Text style={styles.headerStyle}>
                                 Find Your Best Property</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 25 }}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Filter')}
+                            style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 25 }}>
                             <View style={{ backgroundColor: '#00000015', flexDirection: 'row', borderRadius: 10, width: '83%' }}>
                                 <Ionicons name="search" color={'#000000'} size={23} style={{ padding: 10, marginTop: 2 }} />
-                                <TextInput placeholder="Search..." />
+                                <TextInput editable={false} placeholder="Search..." />
                             </View>
                             <View style={{ backgroundColor: '#000000', width: '15%', padding: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
                                 <TouchableOpacity>
                                     <Ionicons name="options-outline" color="#fff" size={20} />
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </TouchableOpacity>
                         <ScrollView style={{ width: '100%', height: '76%', marginVertical: 20, paddingHorizontal: 25 }}>
                             <View style={{ borderRadius: 10 }}>
                                 <Image source={Demo}
