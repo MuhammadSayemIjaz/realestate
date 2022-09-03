@@ -14,11 +14,14 @@ import Favourites from '../screens/frontend/Favourites';
 import AllHouses from '../screens/frontend/AllHouses';
 import Suggested from '../screens/frontend/Suggested';
 import Item from '../components/Item';
-import Filter from '../components/Filter'
+import Filter from '../components/Filter';
+import Account from '../screens/frontend/Account';
+
 // import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
 // const Drawer = createDrawerNavigator();
 
 
@@ -48,21 +51,24 @@ const MyTabs = () => {
             } else if (route.name === 'Favourites') {
                 iconName = focused ? 'heart' : 'heart-outline';
                 size = 30;
+            } else if (route.name === 'Account') {
+                iconName = focused ? 'person-circle' : 'person-circle-outline';
+                size = 30;
             }
             return <Ionicons name={iconName} size={size} color="#ffff" />;
         },
         headerShown: false,
-        tabBarStyle: { backgroundColor: '#121212', height: 70 },
+        tabBarStyle: { backgroundColor: '#121212', height: 70, borderTopEndRadius: 13,borderTopStartRadius: 13},
         tabBarLabelStyle: { color: '#ffff' },
         tabBarActiveBackgroundColor: 'transparent',
         tabBarActiveTintColor: '00aeef',
-        tabBarItemStyle: { borderTopStartRadius: 7, borderTopEndRadius: 7 },
-        tabBarShowLabel: false,
+        tabBarItemStyle: { marginVertical: 5 },
         tabBarBadgeStyle: { backgroundColor: '#ffff', fontWeight: '900' },
     })}>
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="AddProduct" component={AddProduct} />
         <Tab.Screen name="Favourites" component={Favourites} options={{ tabBarBadge: 3 }} />
+        <Tab.Screen name="Account" component={Account} />
     </Tab.Navigator>);
 };
 const AppNavigation = () => {
@@ -73,10 +79,12 @@ const AppNavigation = () => {
 
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Group>
-                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
                     <Stack.Screen name="frontend" component={MyTabs} />
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Register" component={Register} />
+                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                </Stack.Group>
+                <Stack.Group>
                     <Stack.Screen name="Item" component={Item}/>
                     <Stack.Screen name="AllHouses" component={AllHouses}/>
                     <Stack.Screen name="Suggesetd" component={Suggested}/>

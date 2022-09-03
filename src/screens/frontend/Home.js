@@ -28,7 +28,7 @@ const Home = ({ navigation }) => {
                         <FontAwesomeIcon icon={faBarsStaggered} size={23} color={'#000000'} />
                     </TouchableOpacity>
                     <Image source={Logo} style={styles.logo}/>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Account')}>
                         <Ionicons name="person-circle-outline" size={33} color={'#000000'} />
                     </TouchableOpacity>
                 </View>
@@ -43,9 +43,7 @@ const Home = ({ navigation }) => {
                         <TextInput editable={false} placeholder="Search..." />
                     </View>
                     <View style={{ backgroundColor: '#000000', width: '15%', padding: 1, justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                        <TouchableOpacity>
                             <Ionicons name="options-outline" color="#fff" size={20} />
-                        </TouchableOpacity>
                     </View>
                 </TouchableOpacity>
                 <ScrollView style={{ width: '100%', height: '76%', marginVertical: 20, paddingHorizontal: 25 }}>
@@ -68,7 +66,7 @@ const Home = ({ navigation }) => {
                     </View>
                     <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Text variant="titleLarge" style={styles.headerStyle}>Suggested for You</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate('AllHouses')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Suggested')}>
                             <Text style={styles.smallHeadingStyle}>View All <Ionicons name="chevron-forward" size={14} /></Text>
                         </TouchableOpacity>
                     </View>
@@ -88,6 +86,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         flex: 1,
         marginTop: 35,
+        backgroundColor: '#ffff',
     },
     container: {
         width: '100%',

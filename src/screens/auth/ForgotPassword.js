@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import ResetPass from '../../assets/images/ResetPass.png';
@@ -25,51 +25,54 @@ const ForgotPassword = ({ navigation }) => {
             // }))
         }
         auth().sendPasswordResetEmail(email).then(() => {
-            setIsProcessing(false);
             // Toast.show({
-            //     type: 'success',
+                //     type: 'success',
             //     text1: "Email Send",
             //     text2: 'Please Check Your Email Address',
             //     position: 'top',
             //     visibilityTime: 2000,
             //     bottomOffset: 30
             // })
-            navigation.navigate('SignIn');
+            alert('Email Send Succesfully');
+            setIsProcessing(false);
+            navigation.navigate('Login');
         }).catch(err => console.log(err));
     };
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Image source={ResetPass} style={{alignItems: 'center'}}/>
-                    <Text style={styles.header}>Forgot Password</Text>
-                    <Text style={[styles.text, {paddingTop: 20, paddingHorizontal: 30, fontFamily: 'Montserrat-Light'}]}>Don't worry! It happens. Please enter the Email Address Associated with your account. </Text>
-                    <View style={styles.formSection}>
-                        <TextInput
-                            style={styles.input}
-                            mode="outlined"
-                            label={'Email'}
-                            onChangeText={(value) => setEmail(value)}
-                            keyboardType="email-address"
-                            left={<TextInput.Icon icon="at" iconColor="#000000" />}
-                        />
-                        <TouchableOpacity>
-                            <Button style={styles.btn}
-                                mode="contained"
-                                icon={'send'}
-                                loading={isProcessing} disabled={isProcessing} onPress={handleSend}
-                            ><Text style={styles.loginText}>Send Email</Text>
-                            </Button>
+            <ScrollView>
+                <View style={styles.container}>
+                    <View style={styles.content}>
+                        <Image source={ResetPass} style={{ alignItems: 'center' }} />
+                        <Text style={styles.header}>Forgot Password</Text>
+                        <Text style={[styles.text, { paddingTop: 20, paddingHorizontal: 30, fontFamily: 'Montserrat-Light' }]}>Don't worry! It happens. Please enter the Email Address Associated with your account. </Text>
+                        <View style={styles.formSection}>
+                            <TextInput
+                                style={styles.input}
+                                mode="outlined"
+                                label={'Email'}
+                                onChangeText={(value) => setEmail(value)}
+                                keyboardType="email-address"
+                                left={<TextInput.Icon icon="at" iconColor="#000000" />}
+                            />
+                            <TouchableOpacity>
+                                <Button style={styles.btn}
+                                    mode="contained"
+                                    icon={'send'}
+                                    loading={isProcessing} disabled={isProcessing} onPress={handleSend}
+                                ><Text style={styles.loginText}>Send Email</Text>
+                                </Button>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.bottomSection}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('Login')}>
+                            <Text style={[styles.text, { marginRight: 3 }]}>Back to Login</Text>
+                            <Ionicons name="enter-outline" color={'#000000'} size={20} />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.bottomSection}>
-                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={() => navigation.navigate('Login')}>
-                        <Text style={[styles.text, {marginRight: 3}]}>Back to Login</Text>
-                        <Ionicons name="enter-outline" color={'#000000'} size={20}/>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };
@@ -77,7 +80,7 @@ const ForgotPassword = ({ navigation }) => {
 export default ForgotPassword;
 
 const styles = StyleSheet.create({
-    safeArea:{
+    safeArea: {
         backgroundColor: '#fff',
         flex: 1,
     },

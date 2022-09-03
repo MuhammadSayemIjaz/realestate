@@ -10,6 +10,7 @@ import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
 import demoProfile from '../../assets/images/Register.png';
 import { ScrollView } from 'react-native-gesture-handler';
+
 const Register = ({ navigation }) => {
     const initialState = {
         fullName: '',
