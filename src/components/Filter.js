@@ -18,18 +18,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import FilterOptions from './FilterOptions';
-import Slider from '@react-native-community/slider';
+// import Slider from '@react-native-community/slider';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function Filter({ navigation }) {
 
-  // const [state, setState] = useState({ location: 'location' });
+  const [state, setState] = useState('');
   const [products, setProducts] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const [newData, setNewData] = useState('');
   const [isFilterPressed, setIsFilterPressed] = useState(false);
-  const [showPrice, setShowPrice] = useState(false);
+  // const [showPrice, setShowPrice] = useState(false);
   const [price, setPrice] = useState(0);
   const [LocFilter, setLocFilter] = useState(false);
   const [showRooms, setShowRooms] = useState(false);
@@ -48,14 +48,16 @@ export default function Filter({ navigation }) {
   const handlePrice = () => {
     // setShowPrice(true);
     setisPriceBtnPressed(true);
+    setState('Price');
   };
   const handleLocation = () => {
     setisLocBtnPressed(true);
-    const searchData = products.filter((item) => {
-      return item.Location !== products.Location;
-    });
-    console.log(searchData.sort());
-    setNewData(searchData);
+    // const searchData = products.filter((item) => {
+    //   return item.Location !== products.Location;
+    // });
+    // console.log(searchData.sort());
+    // setNewData(searchData);
+    setState('Location');
   };
   const handleRooms = () => {
     setShowRooms(true);
@@ -63,63 +65,59 @@ export default function Filter({ navigation }) {
   };
   const handleType = () => {
     setIsTypeBtnPressed(true);
+    setState('PType');
   };
   const handleBedroom = () => {
     setIsBedroomBtnPressed(true);
+    setState('Bedrooms');
   };
   const handleBathroom = () => {
     setisBathroomBtnPressed(true);
+    setState('Bathrooms');
   };
   const handleReception = () => {
     setisReceptionBtnPressed(true);
+    setState('Reception');
   };
   const handleDining = () => {
     setIsDiningBtnPressed(true);
+    setState('DType');
   };
   const handleKitchen = () => {
     setIsKitchenBtnPressed(true);
+    setState("Kitchen");
   };
   const handleFilterIcon = () => {
     setIsFilterPressed(true);
   };
   const handleSearch = (event) => {
     setLocFilter(event);
-    // setIsFocused(true);
-    // const data = products;
-    // const searchData = data.filter((item) => {
-    //   return item.Bedrooms.includes(event);
-    // });
-    // setNewData(searchData);
-    // {
-    //   isLocBtnPressed ? setNewData(data.filter((item) => {
-    //     return item.Location.toLowerCase().includes(event.toLowerCase());
-    //   })) :
-    //     setNewData(products);
-    // }
-    // {
-    //   isPriceBtnPressed ?
-    //     setNewData(data.filter((item) => {
-    //       return item.Price.includes(event);
-    //     }))
-    //     :
-    //     setNewData(products);
-    // }
-    // {
-    //   isBedroomBtnPressed ?
-    //     setNewData(data.filter((item) => {
-    //       return item.Bedrooms.includes(event);
-    //     }))
-    //     :
-    //     setNewData(products);
-    // }
-    // {
-    //   isBathroomBtnPressed ?
-    //     setNewData(data.filter((item) => {
-    //       return item.Bedrooms.includes(event);
-    //     }))
-    //     :
-    //     setNewData(products);
-    // }
+    setIsFocused(true);
+    const data = products;
+    const searchData = data.filter((item) => {
+      if (state === 'Title') {
+        return item.Title.toLowerCase().includes(event.toLowerCase());
+      } else if (state === 'Price') {
+        return item.Price.includes(event);
+      } else if (state === 'Location') {
+        return item.Location.toLowerCase().includes(event.toLowerCase());
+      } else if (state === 'Bedrooms') {
+        return item.Bedrooms.includes(event);
+      } else if (state === 'Bathrooms') {
+        return item.Bathrooms.includes(event);
+      } else if (state === 'PType') {
+        return item.PType.toLowerCase().includes(event.toLowerCase());
+      } else if (state === 'Reception') {
+        return item.Reception.includes(event);
+      } else if (state === 'DRoom') {
+        return item.DRoom.includes(event);
+      } else if (state === 'Kitchen') {
+        return item.Kitchen.includes(event);
+      } else {
+        return item.Title.includes(event);
+      }
+    });
+    setNewData(searchData);
   };
   const ProductData = () => {
     let array = [];
@@ -239,7 +237,7 @@ export default function Filter({ navigation }) {
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <TouchableOpacity activeOpacity={0.6} onPress={handlePrice}>
                 {isPriceBtnPressed ?
-                  <Button mode={'contained'} style={styles.filterBtn} labelStyle={styles.btnLabelStyle} onPress={() => { setisPriceBtnPressed(false); setShowPrice(false); }}>Price</Button>
+                  <Button mode={'contained'} style={styles.filterBtn} labelStyle={styles.btnLabelStyle} onPress={() => { setisPriceBtnPressed(false); }}>Price</Button>
                   :
                   <Button mode={'outlined'} style={styles.filterBtn} labelStyle={styles.btnLabelStyle}>Price</Button>
                 }
@@ -267,7 +265,7 @@ export default function Filter({ navigation }) {
               </TouchableOpacity>
             </ScrollView>
           </View>
-          {showPrice ? <View style={styles.priceContainer}>
+          {/* {showPrice ? <View style={styles.priceContainer}>
             <View>
               <View style={{ position: 'absolute', top: 0, left: 10, right: 0, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text >0</Text>
@@ -281,10 +279,10 @@ export default function Filter({ navigation }) {
                 minimumTrackTintColor="#000000"
                 maximumTrackTintColor="#000000"
                 thumbTintColor="#000000"
-                onValueChange={(value) => { setPrice(Math.round(value));}}
+                onValueChange={(value) => { setPrice(Math.round(value)); }}
               />
             </View>
-          </View> : ''}
+          </View> : ''} */}
           {showRooms ? <View style={styles.RoomsContainer}>
             <View style={styles.filterButtonsSection}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
