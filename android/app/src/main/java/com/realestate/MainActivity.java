@@ -1,6 +1,7 @@
 package com.realestate;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
+import org.devio.rn.splashscreen.SplashScreen; 
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 
@@ -11,14 +12,15 @@ public class MainActivity extends ReactActivity {
    * rendering of the component.
    */
   @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // here
+        super.onCreate(savedInstanceState);
+    }
+
+  @Override
   protected String getMainComponentName() {
     return "realestate";
   }
-
-  @Override
-protected void onCreate(Bundle savedInstanceState) {
-  super.onCreate(null);
-}
 
   /**
    * Returns the instance of the {@link ReactActivityDelegate}. There the RootView is created and
