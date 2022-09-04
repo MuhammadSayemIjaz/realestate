@@ -8,11 +8,21 @@ import Demo from '../../assets/images/Demo.jpg';
 import Logo from '../../assets/images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
+import  Toast  from 'react-native-toast-message';
 
 const Home = ({ navigation }) => {
+    <Toast ref = {(ref) => Toast.setRef(ref)} />
     const [isPressed, setIsPressed] = useState(false);
     const handleIcon = () => {
         setIsPressed(true);
+        Toast.show({
+            type: 'error',
+            text1: 'Email Already Have an Account',
+            text2: 'Please Enter a Valid Email!',
+            position: 'top',
+            visibilityTime: 3000,
+            bottomOffset: 30,
+        });
         console.log('Drawar Icon is Pressed : ', isPressed);
     };
     return (
@@ -28,7 +38,7 @@ const Home = ({ navigation }) => {
                         <FontAwesomeIcon icon={faBarsStaggered} size={23} color={'#000000'} />
                     </TouchableOpacity>
                     <Image source={Logo} style={styles.logo}/>
-                    <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+                    <TouchableOpacity onPress={() => {navigation.navigate('Account');}}>
                         <Ionicons name="person-circle-outline" size={33} color={'#000000'} />
                     </TouchableOpacity>
                 </View>

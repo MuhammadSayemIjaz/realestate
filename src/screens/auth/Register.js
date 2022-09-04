@@ -7,9 +7,9 @@ import { useAuthContext } from '../../context/AuthContext';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
-import Toast from 'react-native-toast-message';
 import demoProfile from '../../assets/images/Register.png';
 import { ScrollView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 
 const Register = ({ navigation }) => {
     const initialState = {
@@ -41,14 +41,15 @@ const Register = ({ navigation }) => {
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Email Already Have an Account',
-                        text2: 'Please Enter a Valid Email!',
-                        position: 'top',
-                        visibilityTime: 3000,
-                        bottomOffset: 30,
-                    });
+                    // Toast.show({
+                    //     type: 'error',
+                    //     text1: 'Email Already Have an Account',
+                    //     text2: 'Please Enter a Valid Email!',
+                    //     position: 'top',
+                    //     visibilityTime: 3000,
+                    //     bottomOffset: 30,
+                    // });
+                    console.log(error);
                 }
                 // if (error.code === 'auth/invalid-email') {
                 //     // Toast.show({

@@ -1,18 +1,31 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { TextInput, Button, RadioButton } from 'react-native-paper';
+import { TextInput, Button } from 'react-native-paper';
+import { useAuthContext } from '../../context/AuthContext';
 import demoProfile from '../../assets/images/Register.png';
-
+import auth from '@react-native-firebase/auth';
 
 
 const Account = ({ navigation }) => {
+    const { isAuthenticated, dispatch } = useAuthContext();
 
     const [state, setState] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [isPasswordShow, setIsPasswordShow] = useState(false);
     const [value, setValue] = useState('');
 
+    const handleSignOut = () => {
+        auth()
+            .signOut()
+            .then(() => {
+                dispatch({ type: 'LOGOUT' });
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Something went wrong');
+            });
+    }
     const handleChange = (name, val) => {
         setState(s => ({ ...s, [name]: val }));
     };
@@ -74,6 +87,17 @@ const Account = ({ navigation }) => {
                             ><Text style={styles.registerText}>Update Profile</Text>
                             </Button>
                         </TouchableOpacity>
+                        {!isAuthenticated ?
+                            '' : <TouchableOpacity>
+                            <Button style={styles.btn}
+                                mode="contained"
+                                icon={'card-account-details'}
+                                labelStyle={{ fontSize: 25 }}
+                                loading={isProcessing} disabled={isProcessing} onPress={handleSignOut}
+                            ><Text style={styles.registerText}>Sign Out</Text>
+                            </Button>
+                        </TouchableOpacity>
+                        }
                     </View>
                 </View>
             </ScrollView>

@@ -17,7 +17,7 @@ const App = () => {
   return <>
     <AuthContextProvider>
       <Provider theme={theme}>
-        {/* <Toast ref={ref => Toast.setRef(ref)}/> */}
+      <Toast ref = {(ref) => Toast.setRef(ref)} />
         <AppNavigation />
       </Provider>
     </AuthContextProvider>

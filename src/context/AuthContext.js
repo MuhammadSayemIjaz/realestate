@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 const initialState = { isAuthenticated: false };
 
-const reducer = (state, { type, payload }) => {
+const reducer = (state, { type, payload  }) => {
     switch (type) {
         case 'LOGIN':
             return Object.assign({}, { isAuthenticated: true }, { user: payload.user });

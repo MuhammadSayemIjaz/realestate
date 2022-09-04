@@ -8,13 +8,17 @@ import {
   Dimensions,
   Platform,
   Text,
+  SafeAreaView,
 } from 'react-native';
 import { Button } from 'react-native-paper';
 import React, { useEffect, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const { width: screenWidth } = Dimensions.get('window');
+
 export default function Houses({ navigation }) {
+
   const [products, setProducts] = useState([]);
 
   const ProductData = () => {
@@ -30,53 +34,61 @@ export default function Houses({ navigation }) {
         });
         setProducts(array);
       });
-  };
-  useEffect(() => {
-    ProductData();
-  }, []);
-
-  return (
-    <ScrollView style={{ backgroundColor: '#fff', padding: 20 }}>
-      <Text
-        style={{ fontWeight: 'bold', textAlign: 'center', color: 'black', fontSize: 30, paddingVertical: 20 }}>
-        Houses For Sale {products.length}
-      </Text>
-      <View style={styles.container}>
-        {products.map((item, index) => {
-          return (
-            <View style={styles.item} key={index}>
-              <View style={styles.imageContainer}>
-                <Image source={{ uri: item.Url }} style={styles.image} />
+    };
+    useEffect(() => {
+      ProductData();
+    }, []);
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <Text
+          style={{ fontFamily: 'Montserrat-ExtraBold', textAlign: 'center', color: 'black', fontSize: 27, paddingVertical: 20 }}>
+          Favourite Properties
+        </Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container}>
+          {products.map((item, index) => {
+            let ProductsLength = products.length;
+            navigation.navigate("AllHouses", {fav : ProductsLength});
+            return (
+              <View style={styles.item} key={index}>
+                <View style={styles.imageContainer}>
+                  <Image source={{ uri: item.Url }} style={styles.image} />
+                </View>
+                <Text style={styles.title} numberOfLines={2}>{item.Title}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                  <Ionicons name="location" size={20} color={'#000000'} />
+                  <Text>{item.Location} </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: 5,
+                    marginTop: 5,
+                  }}>
+                  <Text
+                    style={{ fontWeight: 'bold', fontSize: 16, color: '#000000eb' }}>
+                    <Text style={{ fontWeight: '900', fontFamily: 'Montserrat-Bold' }}>Price:</Text> {item.Price} PKR
+                  </Text>
+                  <Button mode="contained" icon={'chevron-right'} contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'center', alignItems: 'center' }} labelStyle={{ fontSize: 15 }} style={{ borderRadius: 7, padding: 2 }} buttonColor="#000000e5" onPress={() => navigation.navigate('Item', { item })}>
+                    See More
+                  </Button>
+                </View>
               </View>
-              <Text style={styles.title} numberOfLines={2}>{item.Title}</Text>
-              <View style={{ flexDirection: 'row' }}>
-                <Ionicons name="location" size={20} color={'#000000'} />
-                <Text>{item.Location} </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: 5,
-                  marginTop: 5,
-                }}>
-                <Text
-                  style={{ fontWeight: 'bold', fontSize: 16, color: '#000000eb' }}>
-                  <Text style={{ fontWeight: '900', fontFamily: 'Montserrat-Bold' }}>Price:</Text> {item.Price} PKR
-                </Text>
-                <Button mode="contained" icon={'chevron-right'} contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'center', alignItems: 'center' }} labelStyle={{ fontSize: 15 }} style={{ borderRadius: 7, padding: 2 }} buttonColor="#000000e5" onPress={() => navigation.navigate('Item', { item })}>
-                  See More
-                </Button>
-              </View>
-            </View>
-          );
-        })}
-      </View>
-    </ScrollView>
+            );
+          })}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
+  safeArea:{
+    flex: 1,
+    paddingTop: 30,
+    backgroundColor:'#ffffff',
+  },
   container: {
     flex: 1,
     alignItems: 'center',

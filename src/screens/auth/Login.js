@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -8,6 +9,7 @@ import { useAuthContext } from '../../context/AuthContext';
 import login from '../../assets/images/login1.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
+import  Toast  from 'react-native-toast-message';
 
 const initialState = { email: '', password: '' };
 
@@ -36,9 +38,15 @@ const Login = ({ navigation }) => {
             .signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-
+                Toast.show({
+                    type: 'error',
+                    text1: 'Email Already Have an Account',
+                    text2: 'Please Enter a Valid Email!',
+                    position: 'top',
+                    visibilityTime: 3000,
+                    bottomOffset: 30,
+                });
                 dispatch({ type: 'LOGIN', payload: { user } });
-                console.log('User account created & signed in!');
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -58,49 +66,49 @@ const Login = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <ScrollView style={{height: '100%'}}>
-            <View style={styles.container}>
-                <View style={styles.content}>
-                    <Image source={login} style={styles.image} />
-                    <Text style={styles.header}>LOGIN</Text>
-                    <Text style={styles.heading}>Welcome Back !</Text>
-                    <View style={styles.formSection}>
-                        <TextInput
-                            style={styles.input}
-                            mode="outlined"
-                            label={'Email'}
-                            onChangeText={value => handleChange('email', value)}
-                            keyboardType="email-address"
-                            left={<TextInput.Icon icon="at" iconColor="#000000" />}
-                        />
-                        <TextInput
-                            style={styles.input}
-                            mode="outlined"
-                            label={'Password'}
-                            onChangeText={value => handleChange('password', value)}
-                            secureTextEntry={isPasswordShow ? false : true}
-                            right={<TextInput.Icon iconColor="#000000" name={isPasswordShow ? 'eye' : 'eye-off'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}
-                            left={<TextInput.Icon icon="lock"  iconColor="#000000"/>}
-                        />
-                        <TouchableOpacity>
-                            <Button style={styles.btn}
-                                mode="contained"
-                                icon={'login'}
-                                loading={isProcessing} disabled={isProcessing} onPress={handleLogin}
-                            ><Text style={styles.loginText}>Login</Text>
-                            </Button>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.bottomSection} onPress={() => navigation.navigate('ForgotPassword')}>
-                            <Text style={styles.text}>Forgot Password !</Text>
+            <ScrollView style={{ height: '100%' }}>
+                <View style={styles.container}>
+                    <View style={styles.content}>
+                        <Image source={login} style={styles.image} />
+                        <Text style={styles.header}>LOGIN</Text>
+                        <Text style={styles.heading}>Welcome Back !</Text>
+                        <View style={styles.formSection}>
+                            <TextInput
+                                style={styles.input}
+                                mode="outlined"
+                                label={'Email'}
+                                onChangeText={value => handleChange('email', value)}
+                                keyboardType="email-address"
+                                left={<TextInput.Icon icon="at" iconColor="#000000" />}
+                            />
+                            <TextInput
+                                style={styles.input}
+                                mode="outlined"
+                                label={'Password'}
+                                onChangeText={value => handleChange('password', value)}
+                                secureTextEntry={isPasswordShow ? false : true}
+                                right={<TextInput.Icon iconColor="#000000" name={isPasswordShow ? 'eye' : 'eye-off'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}
+                                left={<TextInput.Icon icon="lock" iconColor="#000000" />}
+                            />
+                            <TouchableOpacity>
+                                <Button style={styles.btn}
+                                    mode="contained"
+                                    icon={'login'}
+                                    loading={isProcessing} disabled={isProcessing} onPress={handleLogin}
+                                ><Text style={styles.loginText}>Login</Text>
+                                </Button>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.bottomSection} onPress={() => navigation.navigate('ForgotPassword')}>
+                                <Text style={styles.text}>Forgot Password !</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.bottomSection}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                            <Text style={styles.text}>Don't have an Account?</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.bottomSection}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-                        <Text style={styles.text}>Don't have an Account?</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -109,7 +117,7 @@ const Login = ({ navigation }) => {
 export default Login;
 
 const styles = StyleSheet.create({
-    safeArea:{
+    safeArea: {
         backgroundColor: '#fff',
         flex: 1,
     },
@@ -157,7 +165,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         paddingHorizontal: 50,
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
     },
     text: {
         fontSize: 15,
