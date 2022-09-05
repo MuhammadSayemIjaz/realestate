@@ -2,7 +2,7 @@
 /* eslint-disable no-alert */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, ToastAndroid, View } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import { useAuthContext } from '../../context/AuthContext';
@@ -34,27 +34,28 @@ const Login = ({ navigation }) => {
     const handleLogin = () => {
         let { email, password } = state;
 
-        if (!email.trim()) { return alert('Email is invalid'); }
-        if (!password.trim()) { return alert('Password is invalid'); }
+        if (!email) { return ToastAndroid.show('Email is invalid',ToastAndroid.SHORT); }
+        if (!password) { return ToastAndroid.show('Password is invalid', ToastAndroid.SHORT); }
 
         setIsProcessing(true);
 
         auth()
-            .signInWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email.toLowerCase(), password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 dispatch({ type: 'LOGIN', payload: { user } });
+                ToastAndroid.show(`Sucessfully Login with ${user.email}` ,ToastAndroid.SHORT);
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
-                    console.log('That email address is already in use!');
+                    ToastAndroid.show('That email address is already in use!',ToastAndroid.SHORT);
                 }
 
                 if (error.code === 'auth/invalid-email') {
-                    console.log('That email address is invalid!');
+                    ToastAndroid.show('That email address is invalid!',ToastAndroid.SHORT);
                 }
 
-                console.error(error);
+                ToastAndroid.show(error,ToastAndroid.SHORT);
             })
             .finally(() => {
                 setIsProcessing(false);
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
     },
     header: {
-        marginTop: 20,
+        // marginTop: 20,
         fontSize: 40,
         fontFamily: 'Montserrat-ExtraBold',
     },

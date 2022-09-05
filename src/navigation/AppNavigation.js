@@ -11,11 +11,12 @@ import Register from '../screens/auth/Register';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import Home from '../screens/frontend/Home';
 import AddProduct from '../screens/frontend/AddProduct';
-import Favourites from '../screens/frontend/Favourites';
+// import Favourites from '../screens/frontend/Favourites';
 import AllHouses from '../screens/frontend/AllHouses';
 import Suggested from '../screens/frontend/Suggested';
 import Item from '../components/Item';
 import Filter from '../components/Filter';
+import Favourites from '../components/Favourites';
 import Account from '../screens/frontend/Account';
 import DrawerNavigation from '../navigation/DrawerNavigation';
 
@@ -78,7 +79,7 @@ const AppNavigation = () => {
                 </Stack.Group>
                 {isAuthenticated ? (<Stack.Group screenOptions={{ headerShown: false }}>
                     <Stack.Screen name="Account" component={Account} />
-                    <Stack.Screen name="Suggesetd" component={Suggested} />
+                    <Stack.Screen name="Suggested" component={Suggested} />
                     <Stack.Screen name="Filter" component={Filter} />
                 </Stack.Group>) : (<Stack.Group >
                     <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />

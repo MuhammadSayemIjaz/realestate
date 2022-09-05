@@ -3,7 +3,7 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { MyTabs } from './AppNavigation';
 import { useAuthContext } from '../context/AuthContext';
-import Favourites from '../screens/frontend/Favourites';
+import Favourites from '../components/Favourites';
 import Account from '../screens/frontend/Account';
 import AddProduct from '../screens/frontend/AddProduct';
 import Filter from '../components/Filter';

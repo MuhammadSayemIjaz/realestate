@@ -4,6 +4,7 @@ import AppNavigation from './src/navigation/AppNavigation';
 import { Provider, MD3LightTheme } from 'react-native-paper';
 import AuthContextProvider from './src/context/AuthContext';
 import SplashScreen from 'react-native-splash-screen';
+import { FavouriteContextProvider } from './src/context/FavouriteContext';
 
 const theme = {
   ...MD3LightTheme,
@@ -19,10 +20,13 @@ const App = () => {
   }, []);
   return <>
     <AuthContextProvider>
+      <FavouriteContextProvider>
       <Provider theme={theme}>
+
       {/* <Toast ref = {(ref) => Toast.setRef(ref)} /> */}
         <AppNavigation />
       </Provider>
+      </FavouriteContextProvider>
     </AuthContextProvider>
   </>;
 };

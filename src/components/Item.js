@@ -1,17 +1,29 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBath, faBellConcierge, faKitchenSet, faRestroom, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import MakeCall from './MakeCall';
-
+import { useFavContext } from '../context/FavouriteContext';
 const Item = ({ navigation, route }) => {
-    // console.log(route.params);
-    const { item: { Url, Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } } = route.params;
-    const handleData = () => {
-        console.log({ Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc });
+    const { favHouses, dispatch } = useFavContext();
+    const [favIcon, setFavIcon] = useState('heart-outline');
+
+    const { Url, Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } = route.params.item;
+
+    useEffect(() => {
+        const FavData = favHouses.map((prod, index) => {
+            if (prod.uid === route.params.id.uid) {
+                return setFavIcon('heart');
+            }
+        });
+    }, []);
+    const handleData = (item) => {
+        setFavIcon('heart');
+        dispatch({ type: 'ADD_TO_FAV', id: item.uid, item });
+        ToastAndroid.show('Property is added in your Favourities', ToastAndroid.SHORT);
     };
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -26,8 +38,8 @@ const Item = ({ navigation, route }) => {
                         <View>
                             <Text style={styles.header}>Details</Text>
                         </View>
-                        <TouchableOpacity style={styles.iconContainer} onPress={handleData}>
-                            <Ionicons name="heart-outline" size={25} color="#555355" />
+                        <TouchableOpacity style={styles.iconContainer} onPress={() => handleData(route.params.item)}>
+                            <Ionicons name={favIcon} size={25} color="#555355" />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.imageTextContainer}>
@@ -186,7 +198,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         flexWrap: 'wrap',
-        backgroundColor: '#ffffffff'
+        backgroundColor: '#ffffffff',
     },
     facilities: {
         paddingHorizontal: 5,

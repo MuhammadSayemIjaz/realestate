@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { useAuthContext } from '../../context/AuthContext';
 import auth from '@react-native-firebase/auth';
@@ -37,48 +37,24 @@ const Register = ({ navigation }) => {
     const handleRegister = () => {
         setIsProcessing(true);
         const { email, password } = state;
+        if (!email) { return ToastAndroid.show('Email is invalid',ToastAndroid.SHORT); }
+        if (!password) { return ToastAndroid.show('Password is invalid', ToastAndroid.SHORT); }
         auth()
             .createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user);
                 createUserProfile(user);
+                // ToastAndroid.show(`User Registered Succesfully With ${user.email}` ,ToastAndroid.SHORT);
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
-                    // Toast.show({
-                    //     type: 'error',
-                    //     text1: 'Email Already Have an Account',
-                    //     text2: 'Please Enter a Valid Email!',
-                    //     position: 'top',
-                    //     visibilityTime: 3000,
-                    //     bottomOffset: 30,
-                    // });
-                    alert(error);
+                    ToastAndroid.show('User is already register with this email' ,ToastAndroid.SHORT);
                 }
                 if (error.code === 'auth/invalid-email') {
-                //     // Toast.show({
-                //     //     type: 'error',
-                //     //     text1: 'Invalid Email',
-                //     //     text2: 'Please Enter a Valid Email!',
-                //     //     position: 'top',
-                //     //     visibilityTime: 3000,
-                //     //     bottomOffset: 30,
-                //     // });
-                    alert('That email address is invalid!');
+                ToastAndroid.show('Email is invalid' ,ToastAndroid.SHORT);
                 }
                 if (error.Code === 'auth/weak-password') {
-                //     return (
-                //         // Toast.show({
-                //         //     type: 'error',
-                //         //     text1: 'Weak Password',
-                //         //     text2: 'Please Enter Strong Password!',
-                //         //     position: 'top',
-                //         //     visibilityTime: 3000,
-                //         //     bottomOffset: 30,
-                //         // })
-                //     );
-                alert(error);
+                ToastAndroid.show('Please Enter Strong Password' ,ToastAndroid.SHORT);
                 }
             }).finally(() => {
                 setIsProcessing(false);
@@ -97,24 +73,22 @@ const Register = ({ navigation }) => {
             uid: user.uid,
             dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
         };
+        if (!fullName) { return ToastAndroid.show('Name is invalid',ToastAndroid.SHORT); }
+        if (!userName) { return ToastAndroid.show('User Name is invalid', ToastAndroid.SHORT); }
+        if (!phoneNo) { return ToastAndroid.show('Phone No is invalid',ToastAndroid.SHORT); }
+        if (!userName) { return ToastAndroid.show('userName is invalid', ToastAndroid.SHORT); }
         firestore()
-            .collection('users')
+        .collection('users')
             .doc(user.uid)
             .set(formData)
             .then(() => {
-                console.log('User added!');
                 dispatch({ type: 'LOGIN', payload: { user } });
                 setIsProcessing(false);
-                Toast.show({
-                    type: 'success',
-                    text1: 'Account Created Successfully',
-                    position: 'top',
-                    visibilityTime: 3000,
-                    bottomOffset: 30,
-                });
+                ToastAndroid.show(`User Registered Succesfully With ${user.email}` ,ToastAndroid.SHORT);
             })
             .catch(err => {
-                console.error(err);
+                ToastAndroid.show(err ,ToastAndroid.SHORT);
+
             })
             .finally(() => {
                 setIsProcessing(false);
@@ -217,7 +191,7 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         marginTop: 30,
-        backgroundColor: '#ffff'
+        backgroundColor: '#ffff',
     },
     content: {
         alignItems: 'center',

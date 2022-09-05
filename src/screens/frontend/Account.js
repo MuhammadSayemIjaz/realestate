@@ -2,7 +2,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Image, ToastAndroid } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { useAuthContext } from '../../context/AuthContext';
 import demoProfile from '../../assets/images/Register.png';
@@ -29,16 +29,15 @@ const Account = ({ navigation }) => {
             })
             .catch(err => {
                 console.error(err);
-                alert('Something went wrong');
+                ToastAndroid.show(`${err} , Something Went Wrong`, ToastAndroid.SHORT)
             });
     };
     const toggleIsLoading = () => {
         // 👇️ passed function to setState
         setIsPressed(current => !current);
-      };
-    
+    };
     const handleIcon = () => {
-        navigation.openDrawer();
+        navigation.goBack();
     };
     const handleChange = (name, val) => {
         setState(s => ({ ...s, [name]: val }));
@@ -53,8 +52,8 @@ const Account = ({ navigation }) => {
     };
     useEffect(() => {
         UserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    
     const handleUpdate = () => {
         // setIsPressed(true);
     };
@@ -125,28 +124,28 @@ const Account = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.bottomSection}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
                             <TouchableOpacity>
-                                <Button style={[styles.btn, { borderColor: '#000000'}]}
+                                <Button style={[styles.btn, { borderColor: '#000000' }]}
                                     mode="outlined"
                                     icon={'account-edit'}
                                     labelStyle={{ fontSize: 20, color: '#000000' }}
                                     loading={isProcessing} disabled={isProcessing} onPress={toggleIsLoading}
-                                ><Text style={[styles.registerText, {fontSize : 20, fontFamily: 'Monsterrat-Medium'}]}>Edit</Text>
+                                ><Text style={[styles.registerText, { fontSize: 20, fontFamily: 'Monsterrat-Medium' }]}>Edit</Text>
                                 </Button>
                             </TouchableOpacity>
                             <TouchableOpacity>
                                 <Button style={styles.btn}
                                     mode="contained"
                                     icon={'account-reactivate'}
-                                    labelStyle={{ fontSize: 20}}
+                                    labelStyle={{ fontSize: 20 }}
                                     loading={isProcessing} disabled={isProcessing} onPress={handleUpdate}
-                                ><Text style={[styles.registerText, {fontSize : 20, fontFamily: 'Monsterrat-Medium'}]}>Update</Text>
+                                ><Text style={[styles.registerText, { fontSize: 20, fontFamily: 'Monsterrat-Medium' }]}>Update</Text>
                                 </Button>
                             </TouchableOpacity>
                         </View>
                         {!isAuthenticated ?
-                            '' : <TouchableOpacity style={{marginTop: 20}}>
+                            '' : <TouchableOpacity style={{ marginTop: 20 }}>
                                 <Button style={styles.btn}
                                     mode="contained"
                                     icon={'logout'}

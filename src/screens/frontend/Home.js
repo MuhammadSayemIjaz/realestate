@@ -44,7 +44,7 @@ const Home = ({ navigation }) => {
                         <Ionicons name="options-outline" color="#fff" size={20} />
                     </View>
                 </TouchableOpacity>
-                <ScrollView style={{ width: '100%', height: '76%', marginVertical: 20, paddingHorizontal: 25 }}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{ width: '100%', height: '76%', marginVertical: 20, paddingHorizontal: 25 }}>
                     <View style={{ borderRadius: 10 }}>
                         <Image source={Demo}
                             style={{
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     safeArea: {
         paddingVertical: 15,
         flex: 1,
-        marginTop: 35,
+        marginTop: 20,
         backgroundColor: '#ffff',
     },
     container: {
