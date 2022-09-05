@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React from 'react';
 import { Text, SafeAreaView, StyleSheet, Image, TouchableOpacity, TextInput, View, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MyCarousel from '../../components/MyCarousel';
@@ -8,24 +8,9 @@ import Demo from '../../assets/images/Demo.jpg';
 import Logo from '../../assets/images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
-import Toast from 'react-native-toast-message';
-// import { DrawerActions } from '@react-navigation/native';
 
 const Home = ({ navigation }) => {
-    <Toast ref={(ref) => Toast.setRef(ref)} />;
-    const [isPressed, setIsPressed] = useState(false);
     const handleIcon = () => {
-        setIsPressed(true);
-        // Toast.show({
-        //     type: 'error',
-        //     text1: 'Email Already Have an Account',
-        //     text2: 'Please Enter a Valid Email!',
-        //     position: 'top',
-        //     visibilityTime: 3000,
-        //     bottomOffset: 30,
-        // });
-        console.log('Drawar Icon is Pressed : ', isPressed);
-        // navigation.dispatch(DrawerActions.openDrawer());
         navigation.openDrawer();
     };
     return (
@@ -75,7 +60,7 @@ const Home = ({ navigation }) => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginVertical: 20 }}>
-                        <MyCarousel />
+                        <MyCarousel/>
                     </View>
                     <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                         <Text variant="titleLarge" style={styles.headerStyle}>Suggested for You</Text>

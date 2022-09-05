@@ -1,11 +1,16 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-alert */
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { useAuthContext } from '../../context/AuthContext';
 import demoProfile from '../../assets/images/Register.png';
 import auth from '@react-native-firebase/auth';
-
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Logo from '../../assets/images/logo.png';
 
 const Account = ({ navigation }) => {
     const { isAuthenticated, dispatch } = useAuthContext();
@@ -25,16 +30,33 @@ const Account = ({ navigation }) => {
                 console.error(err);
                 alert('Something went wrong');
             });
-    }
+    };
+    const handleIcon = () => {
+        navigation.openDrawer();
+    };
     const handleChange = (name, val) => {
         setState(s => ({ ...s, [name]: val }));
     };
 
     const handleUpdate = () => {
-        console.log("Profile Updated");
+        console.log('Profile Updated');
     };
     return (
         <SafeAreaView style={styles.safeArea}>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: 30,
+            }}>
+                <TouchableOpacity onPress={handleIcon} style={{ marginBottom: 5 }}>
+                    <FontAwesomeIcon icon={faArrowLeft} size={23} color={'#000000'} />
+                </TouchableOpacity>
+                <Image source={Logo} style={styles.logo} />
+                <TouchableOpacity onPress={() => { navigation.navigate('Account'); }}>
+                    <Ionicons name="person-circle-outline" size={33} color={'#000000'} />
+                </TouchableOpacity>
+            </View>
             <ScrollView style={{ maxheight: '100%' }}>
                 <View style={styles.container}>
                     <View style={styles.content}>
@@ -89,14 +111,14 @@ const Account = ({ navigation }) => {
                         </TouchableOpacity>
                         {!isAuthenticated ?
                             '' : <TouchableOpacity>
-                            <Button style={styles.btn}
-                                mode="contained"
-                                icon={'card-account-details'}
-                                labelStyle={{ fontSize: 25 }}
-                                loading={isProcessing} disabled={isProcessing} onPress={handleSignOut}
-                            ><Text style={styles.registerText}>Sign Out</Text>
-                            </Button>
-                        </TouchableOpacity>
+                                <Button style={styles.btn}
+                                    mode="contained"
+                                    icon={'logout'}
+                                    labelStyle={{ fontSize: 25 }}
+                                    loading={isProcessing} disabled={isProcessing} onPress={handleSignOut}
+                                ><Text style={styles.registerText}>Sign Out</Text>
+                                </Button>
+                            </TouchableOpacity>
                         }
                     </View>
                 </View>
@@ -111,7 +133,7 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         marginTop: 30,
-        backgroundColor: '#ffff'
+        backgroundColor: '#ffff',
     },
     content: {
         alignItems: 'center',

@@ -11,14 +11,13 @@ import {
     DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import auth from '@react-native-firebase/auth';
 import { useAuthContext } from '../context/AuthContext';
 import { Button } from 'react-native-paper';
-
-const CustomDrawer = (props, {navigation}) => {
+const CustomDrawer = (props) => {
     const { dispatch, user, isAuthenticated } = useAuthContext();
+    console.log(props.navigation);
     const handleSignOut = () => {
         auth()
             .signOut()
@@ -41,7 +40,7 @@ const CustomDrawer = (props, {navigation}) => {
                         {isAuthenticated ? <View>
                             <Text style={{ fontFamily: 'Poppins-Bold' }}> {user?.email}</Text>
                             <Text style={{ fontFamily: 'Poppins-Regular', fontSize: 10 }}> {user?.email}</Text>
-                        </View> : <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('Login')}>
+                        </View> : <TouchableOpacity activeOpacity={0.7} onPress={() => props.navigation.navigate('Login')}>
                             <Button mode="contained" style={{ backgroundColor: '#333333d1', marginLeft: 20}}  labelStyle={{ fontFamily: 'Montserrat-Bold'}} icon={'login'}> Login </Button>
                         </TouchableOpacity>
                         }

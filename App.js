@@ -3,8 +3,6 @@ import React, { useEffect } from 'react';
 import AppNavigation from './src/navigation/AppNavigation';
 import { Provider, MD3LightTheme } from 'react-native-paper';
 import AuthContextProvider from './src/context/AuthContext';
-import DrawerNavigation from './src/navigation/DrawerNavigation';
-// import Toast from 'react-native-toast-message';
 import SplashScreen from 'react-native-splash-screen';
 
 const theme = {
@@ -23,7 +21,7 @@ const App = () => {
     <AuthContextProvider>
       <Provider theme={theme}>
       {/* <Toast ref = {(ref) => Toast.setRef(ref)} /> */}
-        <DrawerNavigation />
+        <AppNavigation />
       </Provider>
     </AuthContextProvider>
   </>;

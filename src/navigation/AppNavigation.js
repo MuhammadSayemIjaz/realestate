@@ -17,10 +17,10 @@ import Suggested from '../screens/frontend/Suggested';
 import Item from '../components/Item';
 import Filter from '../components/Filter';
 import Account from '../screens/frontend/Account';
+import DrawerNavigation from '../navigation/DrawerNavigation';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 export const MyTabs = () => {
     const { isAuthenticated } = useAuthContext();
@@ -53,15 +53,12 @@ export const MyTabs = () => {
         tabBarBadgeStyle: { backgroundColor: '#ffff', fontWeight: '900' },
         tabBarShowLabel: false,
     })}>
-
         <Tab.Group>
             <Tab.Screen name="Frontend" component={Home} />
             {isAuthenticated && <Tab.Screen name="AddProduct" component={AddProduct} />}
             <Tab.Screen name="Favourites" component={Favourites} options={{ tabBarBadge: favItems }} />
             <Tab.Screen name="Account" component={!isAuthenticated ? Login : Account} />
         </Tab.Group>
-
-
     </Tab.Navigator>);
 };
 const AppNavigation = () => {
@@ -72,28 +69,23 @@ const AppNavigation = () => {
         <NavigationContainer>
             <StatusBar barStyle="dark-content" translucent
                 backgroundColor="#eeeeeef8" />
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {!isAuthenticated ? (
-                    <Stack.Group>
-                        <Stack.Screen name="frontend" component={MyTabs} />
-                        <Stack.Screen name="Login" component={Login} />
-                        <Stack.Screen name="Register" component={Register} />
-                        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-                        <Stack.Screen name="Item" component={Item} />
-                        <Stack.Screen name="AllHouses" component={AllHouses} />
-                        <Stack.Screen name="Suggesetd" component={Suggested} />
-                        <Stack.Screen name="Filter" component={Filter} />
-                    </Stack.Group>
-                ) : (
-                    <Stack.Group>
-                        <Stack.Screen name="frontend" component={MyTabs} />
-                        <Stack.Screen name="Item" component={Item} />
-                        <Stack.Screen name="AllHouses" component={AllHouses} />
-                        <Stack.Screen name="Suggesetd" component={Suggested} />
-                        <Stack.Screen name="Filter" component={Filter} />
-                        <Stack.Screen name="Account" component={Account} />
-                    </Stack.Group>
-                )}
+            <Stack.Navigator>
+            <Stack.Group screenOptions={{presentation: 'fullScreenModal', headerShown: false}}>
+                    <Stack.Screen name="Drawer" component={DrawerNavigation}/>
+                    <Stack.Screen name="frontend" component={MyTabs} />
+                    <Stack.Screen name="Item" component={Item} />
+                    <Stack.Screen name="AllHouses" component={AllHouses} />
+                </Stack.Group>
+                {isAuthenticated ? (<Stack.Group screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="Account" component={Account} />
+                    <Stack.Screen name="Suggesetd" component={Suggested} />
+                    <Stack.Screen name="Filter" component={Filter} />
+                </Stack.Group>) : (<Stack.Group>
+                    <Stack.Screen name="Login" component={Login} />
+                    <Stack.Screen name="Register" component={Register} />
+                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                </Stack.Group>)
+                }
             </Stack.Navigator>
         </NavigationContainer>
     );

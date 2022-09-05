@@ -34,7 +34,7 @@ export default function Wishlist({ navigation }) {
         <Ionicons
           name="person-circle-outline"
           size={32}
-          onPress={() => navigation.navigate('Profile')} />
+          onPress={() => navigation.navigate('Account')} />
       </View>
       <View
         style={{
@@ -46,7 +46,7 @@ export default function Wishlist({ navigation }) {
           borderBottomColor: '#ccc9',
           paddingBottom: 10,
         }}>
-        <Ionicons name="heart" color="#f28a89" size={35} />
+        <Ionicons name="heart" color="red" size={35} />
         <Text
           variant="headlineLarge"
           style={{ textAlign: 'center', fontFamily: 'Poppins-Bold' }}>
@@ -67,14 +67,14 @@ export default function Wishlist({ navigation }) {
             }}
             onPress={() => dispatch({ type: 'EMPTY' })}>
             <Ionicons name="trash-outline" size={22} />
-            <Text style={{ fontFamily: 'Poppins-Regular' }}>Clear All </Text>
+            <Text style={{ fontFamily: 'Monsterrat-Bold' }}>Clear All </Text>
           </TouchableOpacity>
         )}
         {favHouses.length === 0 ? (
           <Text
             variant="titleLarge"
             style={{
-              fontFamily: 'Poppins-Regular',
+              fontFamily: 'Monsterrat-Bold',
               textAlign: 'center',
               paddingVertical: 10,
             }}>
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     width: screenWidth - 60,
     height: screenWidth - 120,
     borderWidth: 1,
-    borderColor: '#F28A89',
+    borderColor: 'red',
     padding: 10,
     marginBottom: 10,
   },
@@ -148,6 +148,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // paddingHorizontal:5,
     fontSize: 15,
-    color: '#023047',
+    color: '#000000',
   },
 });

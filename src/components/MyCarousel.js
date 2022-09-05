@@ -70,7 +70,6 @@ const MyCarousel = props => {
                 renderItem={renderItem}
                 hasParallaxImages={true}
                 autoplay={true}
-                // autoplayInterval={2000}
                 loop={true}
             />
         </View>
