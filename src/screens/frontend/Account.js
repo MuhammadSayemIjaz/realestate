@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable no-alert */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { useAuthContext } from '../../context/AuthContext';
 import demoProfile from '../../assets/images/Register.png';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,12 +15,12 @@ import Logo from '../../assets/images/logo.png';
 
 const Account = ({ navigation }) => {
     const { isAuthenticated, dispatch, user } = useAuthContext();
-    console.log(`user`, user);
+
     const [state, setState] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [isPasswordShow, setIsPasswordShow] = useState(false);
-    const [value, setValue] = useState('');
-
+    const [getUser, setGetUser] = useState({});
+    const [isPressed, setIsPressed] = useState(false)
     const handleSignOut = () => {
         auth()
             .signOut()
@@ -31,15 +32,31 @@ const Account = ({ navigation }) => {
                 alert('Something went wrong');
             });
     };
+    const toggleIsLoading = () => {
+        // 👇️ passed function to setState
+        setIsPressed(current => !current);
+      };
+    
     const handleIcon = () => {
         navigation.openDrawer();
     };
     const handleChange = (name, val) => {
         setState(s => ({ ...s, [name]: val }));
     };
-
+    const UserData = async () => {
+        const userInfo = await firestore()
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        const User = userInfo.data();
+        setGetUser(User);
+    };
+    useEffect(() => {
+        UserData();
+    }, []);
+    
     const handleUpdate = () => {
-        console.log('Profile Updated');
+        // setIsPressed(true);
     };
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -69,7 +86,8 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'Full Name'}
-                                // value={user.name}
+                                disabled={isPressed ? false : true}
+                                value={getUser?.fullName}
                                 onChangeText={value => handleChange('fullName', value)}
                                 keyboardType="numbers-and-punctuation"
                                 left={<TextInput.Icon icon="account" iconColor="#000000" />}
@@ -78,7 +96,8 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'User Name'}
-                                value={value}
+                                value={getUser?.userName}
+                                disabled={isPressed ? false : true}
                                 keyboardType="numbers-and-punctuation"
                                 onChangeText={value => handleChange('userName', value)}
                                 left={<TextInput.Icon icon="account-circle" iconColor="#000000" />}
@@ -87,7 +106,8 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'Email'}
-                                value={value}
+                                value={getUser?.email}
+                                disabled={isPressed ? false : true}
                                 keyboardType="email-address"
                                 onChangeText={value => handleChange('email', value)}
                                 left={<TextInput.Icon icon="email" iconColor="#000000" />}
@@ -96,7 +116,8 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'Phone Number'}
-                                value={value}
+                                value={getUser?.phoneNo}
+                                disabled={isPressed ? false : true}
                                 onChangeText={value => handleChange('phoneNo', value)}
                                 keyboardType="number-pad"
                                 left={<TextInput.Icon iconColor="#000000" name={'phone'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}
@@ -104,17 +125,28 @@ const Account = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.bottomSection}>
-                        <TouchableOpacity>
-                            <Button style={styles.btn}
-                                mode="contained"
-                                icon={'card-account-details'}
-                                labelStyle={{ fontSize: 25 }}
-                                loading={isProcessing} disabled={isProcessing} onPress={handleUpdate}
-                            ><Text style={styles.registerText}>Update Profile</Text>
-                            </Button>
-                        </TouchableOpacity>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 10}}>
+                            <TouchableOpacity>
+                                <Button style={[styles.btn, { borderColor: '#000000'}]}
+                                    mode="outlined"
+                                    icon={'account-edit'}
+                                    labelStyle={{ fontSize: 20, color: '#000000' }}
+                                    loading={isProcessing} disabled={isProcessing} onPress={toggleIsLoading}
+                                ><Text style={[styles.registerText, {fontSize : 20, fontFamily: 'Monsterrat-Medium'}]}>Edit</Text>
+                                </Button>
+                            </TouchableOpacity>
+                            <TouchableOpacity>
+                                <Button style={styles.btn}
+                                    mode="contained"
+                                    icon={'account-reactivate'}
+                                    labelStyle={{ fontSize: 20}}
+                                    loading={isProcessing} disabled={isProcessing} onPress={handleUpdate}
+                                ><Text style={[styles.registerText, {fontSize : 20, fontFamily: 'Monsterrat-Medium'}]}>Update</Text>
+                                </Button>
+                            </TouchableOpacity>
+                        </View>
                         {!isAuthenticated ?
-                            '' : <TouchableOpacity>
+                            '' : <TouchableOpacity style={{marginTop: 20}}>
                                 <Button style={styles.btn}
                                     mode="contained"
                                     icon={'logout'}
@@ -170,7 +202,6 @@ const styles = StyleSheet.create({
     },
     btn: {
         borderRadius: 7,
-        marginTop: 15,
         padding: 6,
     },
     registerText: {
@@ -180,7 +211,6 @@ const styles = StyleSheet.create({
     },
     bottomSection: {
         paddingHorizontal: 30,
-        marginTop: 30,
         marginBottom: 30,
     },
     text: {

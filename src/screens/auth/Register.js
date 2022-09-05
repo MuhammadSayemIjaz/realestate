@@ -26,7 +26,6 @@ const Register = ({ navigation }) => {
     const { dispatch } = useAuthContext();
     const [isPasswordShow, setIsPasswordShow] = useState(false);
     const [state, setState] = useState(initialState);
-    const [isProcess, setIsProcess] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
 
     const handleChange = (name, val) => {
@@ -55,9 +54,9 @@ const Register = ({ navigation }) => {
                     //     visibilityTime: 3000,
                     //     bottomOffset: 30,
                     // });
-                    console.log(error);
+                    alert(error);
                 }
-                // if (error.code === 'auth/invalid-email') {
+                if (error.code === 'auth/invalid-email') {
                 //     // Toast.show({
                 //     //     type: 'error',
                 //     //     text1: 'Invalid Email',
@@ -66,9 +65,9 @@ const Register = ({ navigation }) => {
                 //     //     visibilityTime: 3000,
                 //     //     bottomOffset: 30,
                 //     // });
-                //     alert('That email address is invalid!');
-                // }
-                // if (error.Code === 'auth/weak-password') {
+                    alert('That email address is invalid!');
+                }
+                if (error.Code === 'auth/weak-password') {
                 //     return (
                 //         // Toast.show({
                 //         //     type: 'error',
@@ -79,8 +78,8 @@ const Register = ({ navigation }) => {
                 //         //     bottomOffset: 30,
                 //         // })
                 //     );
-                // }
                 alert(error);
+                }
             }).finally(() => {
                 setIsProcessing(false);
             });
@@ -125,7 +124,7 @@ const Register = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-              <View style={{
+            <View style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',

@@ -7,6 +7,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { TextInput, Button } from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import storage from '@react-native-firebase/storage';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -164,6 +165,7 @@ const AddProduct = ({ navigation }) => {
       Kitchen: Kitchen,
       Desc: Desc,
       Url: url,
+      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
     };
     if (ProductData.Url === null) {
       alert('Please Select Image');
