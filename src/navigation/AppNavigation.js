@@ -70,8 +70,8 @@ const AppNavigation = () => {
             <StatusBar barStyle="dark-content" translucent
                 backgroundColor="#eeeeeef8" />
             <Stack.Navigator>
-            <Stack.Group screenOptions={{presentation: 'fullScreenModal', headerShown: false}}>
-                    <Stack.Screen name="Drawer" component={DrawerNavigation}/>
+                <Stack.Group screenOptions={{ presentation: 'fullScreenModal', headerShown: false }}>
+                    <Stack.Screen name="Drawer" component={DrawerNavigation} />
                     <Stack.Screen name="frontend" component={MyTabs} />
                     <Stack.Screen name="Item" component={Item} />
                     <Stack.Screen name="AllHouses" component={AllHouses} />
@@ -80,10 +80,10 @@ const AppNavigation = () => {
                     <Stack.Screen name="Account" component={Account} />
                     <Stack.Screen name="Suggesetd" component={Suggested} />
                     <Stack.Screen name="Filter" component={Filter} />
-                </Stack.Group>) : (<Stack.Group>
-                    <Stack.Screen name="Login" component={Login} />
-                    <Stack.Screen name="Register" component={Register} />
-                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                </Stack.Group>) : (<Stack.Group >
+                    <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                    <Stack.Screen name="Register" component={Register} options={{ headerShown: false }} />
+                    <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
                 </Stack.Group>)
                 }
             </Stack.Navigator>

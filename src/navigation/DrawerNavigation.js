@@ -19,8 +19,8 @@ const DrawerNavigation = () => {
                 drawerContent={props => <CustomDrawer {...props} />}
                 screenOptions={{
                     headerShown: false,
-                    drawerActiveBackgroundColor: '#000000',
-                    drawerActiveTintColor: '#fff',
+                    drawerActiveBackgroundColor: '#00000031',
+                    drawerActiveTintColor: '#000000',
                     drawerInactiveTintColor: '#333',
                     drawerLabelStyle: {
                         marginLeft: -20,
@@ -34,7 +34,7 @@ const DrawerNavigation = () => {
                         component={MyTabs}
                         options={{
                             drawerIcon: ({ focused, color }) => (
-                                <Ionicons name={focused ? 'home' : 'home-outline'} size={30} color={color} />
+                                <Ionicons name={focused ? 'home-sharp' : 'home-outline'} size={30} color={color} />
                             ),
                         }}
                     />

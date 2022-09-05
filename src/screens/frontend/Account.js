@@ -13,8 +13,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Logo from '../../assets/images/logo.png';
 
 const Account = ({ navigation }) => {
-    const { isAuthenticated, dispatch } = useAuthContext();
-
+    const { isAuthenticated, dispatch, user } = useAuthContext();
+    console.log(`user`, user);
     const [state, setState] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -69,6 +69,7 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'Full Name'}
+                                // value={user.name}
                                 onChangeText={value => handleChange('fullName', value)}
                                 keyboardType="numbers-and-punctuation"
                                 left={<TextInput.Icon icon="account" iconColor="#000000" />}
@@ -77,6 +78,7 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'User Name'}
+                                value={value}
                                 keyboardType="numbers-and-punctuation"
                                 onChangeText={value => handleChange('userName', value)}
                                 left={<TextInput.Icon icon="account-circle" iconColor="#000000" />}
@@ -85,6 +87,7 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'Email'}
+                                value={value}
                                 keyboardType="email-address"
                                 onChangeText={value => handleChange('email', value)}
                                 left={<TextInput.Icon icon="email" iconColor="#000000" />}
@@ -93,6 +96,7 @@ const Account = ({ navigation }) => {
                                 style={styles.input}
                                 mode="outlined"
                                 label={'Phone Number'}
+                                value={value}
                                 onChangeText={value => handleChange('phoneNo', value)}
                                 keyboardType="number-pad"
                                 left={<TextInput.Icon iconColor="#000000" name={'phone'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}

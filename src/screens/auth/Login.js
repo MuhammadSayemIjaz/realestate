@@ -9,7 +9,10 @@ import { useAuthContext } from '../../context/AuthContext';
 import login from '../../assets/images/login1.png';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
-import  Toast  from 'react-native-toast-message';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Logo from '../../assets/images/logo.png';
 
 const initialState = { email: '', password: '' };
 
@@ -25,12 +28,14 @@ const Login = ({ navigation }) => {
         setState(s => ({ ...s, [name]: value }));
 
     };
-
+    const handleIcon = () => {
+        navigation.openDrawer();
+    };
     const handleLogin = () => {
         let { email, password } = state;
 
-        if (!email) { return alert('Email is invalid'); }
-        if (!password) { return alert('Password is invalid'); }
+        if (!email.trim()) { return alert('Email is invalid'); }
+        if (!password.trim()) { return alert('Password is invalid'); }
 
         setIsProcessing(true);
 
@@ -38,14 +43,6 @@ const Login = ({ navigation }) => {
             .signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                Toast.show({
-                    type: 'error',
-                    text1: 'Email Already Have an Account',
-                    text2: 'Please Enter a Valid Email!',
-                    position: 'top',
-                    visibilityTime: 3000,
-                    bottomOffset: 30,
-                });
                 dispatch({ type: 'LOGIN', payload: { user } });
             })
             .catch(error => {
@@ -66,6 +63,20 @@ const Login = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: 30,
+            }}>
+                <TouchableOpacity onPress={handleIcon} style={{ marginBottom: 5 }}>
+                    <FontAwesomeIcon icon={faBarsStaggered} size={23} color={'#000000'} />
+                </TouchableOpacity>
+                <Image source={Logo} style={styles.logo} />
+                <TouchableOpacity onPress={() => { navigation.navigate('Account'); }}>
+                    <Ionicons name="person-circle-outline" size={33} color={'#000000'} />
+                </TouchableOpacity>
+            </View>
             <ScrollView style={{ height: '100%' }}>
                 <View style={styles.container}>
                     <View style={styles.content}>
@@ -90,6 +101,9 @@ const Login = ({ navigation }) => {
                                 right={<TextInput.Icon iconColor="#000000" name={isPasswordShow ? 'eye' : 'eye-off'} onPress={() => { setIsPasswordShow(!isPasswordShow); }} />}
                                 left={<TextInput.Icon icon="lock" iconColor="#000000" />}
                             />
+                            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                                <Text style={[styles.text, {textAlign: 'right'}]}>Forgot Password !</Text>
+                            </TouchableOpacity>
                             <TouchableOpacity>
                                 <Button style={styles.btn}
                                     mode="contained"
@@ -97,9 +111,6 @@ const Login = ({ navigation }) => {
                                     loading={isProcessing} disabled={isProcessing} onPress={handleLogin}
                                 ><Text style={styles.loginText}>Login</Text>
                                 </Button>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.bottomSection} onPress={() => navigation.navigate('ForgotPassword')}>
-                                <Text style={styles.text}>Forgot Password !</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -127,7 +138,6 @@ const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
         width: '100%',
-        marginTop: 30,
     },
     heading: {
         fontSize: 30,
@@ -135,14 +145,14 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
     },
     header: {
-        marginTop: 30,
+        marginTop: 20,
         fontSize: 40,
         fontFamily: 'Montserrat-ExtraBold',
     },
     formSection: {
         width: '100%',
         paddingHorizontal: 30,
-        marginTop: 30,
+        marginTop: 15,
     },
     input: {
         marginVertical: 10,
@@ -162,7 +172,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat-Bold',
     },
     bottomSection: {
-        marginTop: 30,
+        marginVertical: 20,
         paddingHorizontal: 50,
         justifyContent: 'center',
         alignItems: 'center',

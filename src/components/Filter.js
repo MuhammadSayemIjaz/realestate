@@ -1,9 +1,8 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable no-lone-blocks */
 /* eslint-disable react-native/no-inline-styles */
+/* eslint-disable no-lone-blocks */
 import {
   View,
-  Image,
   StyleSheet,
   Dimensions,
   Platform,
@@ -14,9 +13,10 @@ import {
   ScrollView,
 } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import RenderItems from './RenderItems';
 // import FilterOptions from './FilterOptions';
 // import Slider from '@react-native-community/slider';
 
@@ -30,10 +30,7 @@ export default function Filter({ navigation }) {
   const [newData, setNewData] = useState('');
   const [isFilterPressed, setIsFilterPressed] = useState(false);
   // const [showPrice, setShowPrice] = useState(false);
-  const [price, setPrice] = useState(0);
-  const [LocFilter, setLocFilter] = useState(false);
   const [showRooms, setShowRooms] = useState(false);
-  const [showType, setShowType] = useState(false);
   // Pressed Btn States
   const [isPriceBtnPressed, setisPriceBtnPressed] = useState(false);
   const [isLocBtnPressed, setisLocBtnPressed] = useState(false);
@@ -85,13 +82,12 @@ export default function Filter({ navigation }) {
   };
   const handleKitchen = () => {
     setIsKitchenBtnPressed(true);
-    setState("Kitchen");
+    setState('Kitchen');
   };
   const handleFilterIcon = () => {
     setIsFilterPressed(true);
   };
   const handleSearch = (event) => {
-    setLocFilter(event);
     setIsFocused(true);
     const data = products;
     const searchData = data.filter((item) => {
@@ -138,51 +134,7 @@ export default function Filter({ navigation }) {
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.item} >
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: item.Url }} style={styles.image} />
-        </View>
-        <Text style={styles.title} numberOfLines={2}>{item.Title}</Text>
-        <View style={{ flexDirection: 'row' }}>
-          <Ionicons name="location" size={20} color={'#000000'} />
-          <Text>{item.Location} </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: 5,
-            marginTop: 5,
-          }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 16,
-              color: '#000000eb',
-            }}>
-            <Text style={{
-              fontWeight: '900',
-              fontFamily: 'Montserrat-Bold',
-            }}>Price:</Text> {item.Price} PKR
-          </Text>
-          <Button mode="contained" icon={'chevron-right'}
-            contentStyle={{
-              flexDirection: 'row-reverse',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            labelStyle={{ fontSize: 15 }}
-            style={{
-              borderRadius: 7,
-              padding: 2,
-            }}
-            buttonColor="#000000e5"
-            onPress={() => navigation.navigate('Item', { item })}>
-            See More
-          </Button>
-        </View>
-      </View>
+      <RenderItems item={item} navigation={navigation}/>
     );
   };
   return (

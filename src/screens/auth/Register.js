@@ -10,6 +10,10 @@ import firestore from '@react-native-firebase/firestore';
 import demoProfile from '../../assets/images/Register.png';
 import { ScrollView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Logo from '../../assets/images/logo.png';
 
 const Register = ({ navigation }) => {
     const initialState = {
@@ -28,7 +32,9 @@ const Register = ({ navigation }) => {
     const handleChange = (name, val) => {
         setState(s => ({ ...s, [name]: val }));
     };
-
+    const handleIcon = () => {
+        navigation.goBack();
+    };
     const handleRegister = () => {
         setIsProcessing(true);
         const { email, password } = state;
@@ -119,6 +125,20 @@ const Register = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                paddingHorizontal: 30,
+            }}>
+                <TouchableOpacity onPress={handleIcon} style={{ marginBottom: 5 }}>
+                    <FontAwesomeIcon icon={faArrowLeft} size={23} color={'#000000'} />
+                </TouchableOpacity>
+                <Image source={Logo} style={styles.logo} />
+                <TouchableOpacity onPress={() => { navigation.navigate('Account'); }}>
+                    <Ionicons name="person-circle-outline" size={33} color={'#000000'} />
+                </TouchableOpacity>
+            </View>
             <ScrollView style={{ maxheight: '100%' }}>
                 <View style={styles.container}>
                     <View style={styles.content}>
