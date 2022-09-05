@@ -59,7 +59,6 @@ const Register = ({ navigation }) => {
             }).finally(() => {
                 setIsProcessing(false);
             });
-        console.log(email, password);
     };
 
 

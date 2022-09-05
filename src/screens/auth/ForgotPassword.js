@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import ResetPass from '../../assets/images/ResetPass.png';
@@ -36,7 +36,7 @@ const ForgotPassword = ({ navigation }) => {
             alert('Email Send Succesfully');
             setIsProcessing(false);
             navigation.navigate('Login');
-        }).catch(err => console.log(err));
+        }).catch(err => ToastAndroid.show(err, ToastAndroid.SHORT));
     };
     return (
         <SafeAreaView style={styles.safeArea}>

@@ -19,14 +19,14 @@ import Filter from '../components/Filter';
 import Favourites from '../components/Favourites';
 import Account from '../screens/frontend/Account';
 import DrawerNavigation from '../navigation/DrawerNavigation';
+import { useFavContext } from '../context/FavouriteContext';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export const MyTabs = () => {
     const { isAuthenticated } = useAuthContext();
-    console.log('Tab Auth', isAuthenticated);
-    let favItems = 0;
+    const { favHouses } = useFavContext();
     return (<Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, size, color }) => {
             let iconName;
@@ -57,15 +57,13 @@ export const MyTabs = () => {
         <Tab.Group>
             <Tab.Screen name="Frontend" component={Home} />
             {isAuthenticated && <Tab.Screen name="AddProduct" component={AddProduct} />}
-            <Tab.Screen name="Favourites" component={Favourites} options={{ tabBarBadge: favItems }} />
+            <Tab.Screen name="Favourites" component={Favourites} options={{ tabBarBadge: favHouses.length }} />
             <Tab.Screen name="Account" component={!isAuthenticated ? Login : Account} />
         </Tab.Group>
     </Tab.Navigator>);
 };
 const AppNavigation = () => {
     const { isAuthenticated } = useAuthContext();
-    console.log('App Auth', isAuthenticated);
-
     return (
         <NavigationContainer>
             <StatusBar barStyle="dark-content" translucent

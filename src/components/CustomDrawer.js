@@ -17,7 +17,6 @@ import { useAuthContext } from '../context/AuthContext';
 import { Button } from 'react-native-paper';
 const CustomDrawer = (props) => {
     const { dispatch, user, isAuthenticated } = useAuthContext();
-    console.log(props.navigation);
     const handleSignOut = () => {
         auth()
             .signOut()

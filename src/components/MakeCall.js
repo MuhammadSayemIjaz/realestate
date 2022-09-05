@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Text, ToastAndroid } from 'react-native';
 import { Button } from 'react-native-paper';
 import call from 'react-native-phone-call';
 import Modal from 'react-native-modal';
@@ -19,7 +19,7 @@ const MakeCall = ({PhoneNo}) => {
     };
 
     const MakingCall = () => {
-        call(args).catch((err) => console.log(err));
+        call(args).catch((err) => ToastAndroid.show(err, ToastAndroid.SHORT));
         toggleModal();
     };
     const handleModal = () => {

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { createContext, useReducer, useContext } from 'react';
-import Toast from 'react-native-toast-message';
+import { ToastAndroid } from 'react-native';
 const FavContext = createContext();
 const FavReducer = (state, action) => {
 
@@ -14,25 +14,12 @@ const FavReducer = (state, action) => {
 
             const check = favHouses.find((product) => product.uid === action.id);
             if (check) {
-                Toast.show({
-                    type: 'error',
-                    text1: 'This House is Already in your Wishlist',
-                    position: 'top',
-                    visibilityTime: 3000,
-                    bottomOffset: 30,
-                });
+                ToastAndroid.show('This House is Already in your Wishlist', ToastAndroid.SHORT);
                 return state;
             }
             else {
                 product = action.item;
-                Toast.show({
-                    type: 'success',
-                    text1: 'This House Added to your Wishlist',
-                    position: 'top',
-                    visibilityTime: 3000,
-                    bottomOffset: 30,
-                });
-                // console.log(favHouses)
+                ToastAndroid.show('This House is Added To Your Wishlist', ToastAndroid.SHORT);
                 return ({
                     favHouses: [product, ...favHouses],
 
@@ -46,26 +33,15 @@ const FavReducer = (state, action) => {
         case 'DELETE':
             const filtered = favHouses.filter((product) => product.uid !== action.id);
             product = action.item;
-            Toast.show({
-                type: 'success',
-                text1: 'House remove from your Wishlist',
-                position: 'top',
-                visibilityTime: 3000,
-                bottomOffset: 30,
-            });
+            ToastAndroid.show('House remove from your Wishlist', ToastAndroid.SHORT);
             return {
                 favHouses: [...filtered],
             };
 
 
         case 'EMPTY':
-            Toast.show({
-                type: 'success',
-                text1: 'All Data Remove from your Wishlist',
-                position: 'top',
-                visibilityTime: 3000,
-                bottomOffset: 30,
-            });
+            ToastAndroid.show('All Data Remove from your Wishlist', ToastAndroid.SHORT);
+
             return {
                 favHouses: [],
             };
