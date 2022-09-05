@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width: screenWidth } = Dimensions.get('window');
-const RenderItems = ({item , navigation}) => {
+const RenderItems = ({ item, navigation }) => {
     return (
         <View style={styles.item} >
             <View style={styles.imageContainer}>
@@ -58,31 +58,33 @@ const RenderItems = ({item , navigation}) => {
 
 export default RenderItems;
 
-const styles = StyleSheet.create({item: {
-    width: screenWidth - 40,
-    height: screenWidth - 100,
-    borderWidth: 1,
-    marginBottom: 10,
-    borderRadius: 16,
-    borderColor: '#333333',
-    padding: 5,
-  },
-  imageContainer: {
-    flex: 1,
-    marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
-    backgroundColor: 'white',
-    borderRadius: 10,
-  },
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 15,
-    color: '#000000',
-    marginVertical: 5,
-    fontFamily: 'Montserrat-Bold',
-  },});
+const styles = StyleSheet.create({
+    item: {
+        width: screenWidth - 40,
+        height: screenWidth - 100,
+        borderWidth: 1,
+        marginBottom: 10,
+        borderRadius: 16,
+        borderColor: '#333333',
+        padding: 5,
+    },
+    imageContainer: {
+        flex: 1,
+        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        backgroundColor: 'white',
+        borderRadius: 10,
+    },
+    image: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'cover',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: '#000000',
+        marginVertical: 5,
+        fontFamily: 'Montserrat-Bold',
+    },
+});

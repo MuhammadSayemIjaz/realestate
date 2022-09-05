@@ -147,31 +147,41 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    // alignItems: "center",
-    // justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   item: {
-    width: screenWidth - 60,
-    height: screenWidth - 120,
+    width: screenWidth - 40,
+    height: screenWidth - 100,
     borderWidth: 1,
-    borderColor: 'red',
-    padding: 10,
     marginBottom: 10,
+    borderRadius: 16,
+    borderColor: '#333333',
+    padding: 5,
   },
   imageContainer: {
     flex: 1,
     marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
     backgroundColor: 'white',
-    borderRadius: 8,
+    borderRadius: 10,
   },
   image: {
-    width: 100,
-    height: 100,
+    ...StyleSheet.absoluteFillObject,
+    resizeMode: 'cover',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   title: {
     fontWeight: 'bold',
-    // paddingHorizontal:5,
     fontSize: 15,
     color: '#000000',
+    marginVertical: 5,
+    fontFamily: 'Montserrat-Bold',
   },
+  headerStyle: {
+    fontSize: 25,
+    fontFamily: 'Montserrat-Bold',
+    color: '#333333',
+    textAlign: 'center',
+},
 });

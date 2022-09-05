@@ -49,6 +49,7 @@ export default function Filter({ navigation }) {
   };
   const handleLocation = () => {
     setisLocBtnPressed(true);
+
     setState('Location');
   };
   const handleRooms = () => {
@@ -143,9 +144,7 @@ export default function Filter({ navigation }) {
             style={styles.iconContainer}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons
-          name="arrow-back"
-          size={30} color="#000000" />
+            <Ionicons name="arrow-back" style={{ backgroundColor: '#fff' }} size={35} color="#000000" />
           </TouchableOpacity>
           <View style={{ width: '70%' }}>
             <Text style={styles.header}>Find Houses</Text>

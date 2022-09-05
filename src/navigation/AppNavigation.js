@@ -57,7 +57,7 @@ export const MyTabs = () => {
         <Tab.Group>
             <Tab.Screen name="Frontend" component={Home} />
             {isAuthenticated && <Tab.Screen name="AddProduct" component={AddProduct} />}
-            <Tab.Screen name="Favourites" component={Favourites} options={{ tabBarBadge: favHouses.length }} />
+            <Tab.Screen name="Favourites" component={!isAuthenticated ? Login : Favourites} options={{ tabBarBadge: favHouses.length }} />
             <Tab.Screen name="Account" component={!isAuthenticated ? Login : Account} />
         </Tab.Group>
     </Tab.Navigator>);

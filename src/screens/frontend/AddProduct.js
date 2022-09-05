@@ -44,9 +44,128 @@ const AddProduct = ({ navigation }) => {
   const handleChange = (name, val) => {
     setState(s => ({ ...s, [name]: val }));
   };
-  const handleUrl = (imageUrl) => {
+  const handleUrl = async (imageUrl) => {
+    const { Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } = state;
+    if (!Title) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Title' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Location) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Location' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Price) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Price' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!PhoneNo) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert PhoneNo' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Desc) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Description' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Bedrooms) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert No of Bedrooms' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Area) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Property Area' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Kitchen) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert No of Kitchens' ,ToastAndroid.SHORT)
+          );
+      }
+      else if (!Bathrooms) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert No of Bathrooms' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!PhoneNo) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Phone No' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!PType) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Property Type' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!FType) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert Furnish Type' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Rooms) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert No of Living Rooms' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!Reception) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert No of Receptions' ,ToastAndroid.SHORT)
+        );
+      }
+      else if (!DRoom) {
+        setIsProcess(false);
+        return (
+          ToastAndroid.show('Please Insert No of Dining Room' ,ToastAndroid.SHORT)
+        );
+      }
+      const id = Math.random().toString(36).slice(2);
+      const ProductData = {
+        Title: Title,
+        Location: Location,
+        PhoneNo: PhoneNo,
+        Price: Price,
+        PType: PType,
+        Area: Area,
+        FType: FType,
+        Bedrooms: Bedrooms,
+        Bathrooms: Bathrooms,
+        Rooms: Rooms,
+        Reception: Reception,
+        DRoom: DRoom,
+        Kitchen: Kitchen,
+        Desc: Desc,
+        Url: imageUrl,
+        uid : id,
+        dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+        await firestore()
+          .collection('Property')
+          .add(ProductData)
+          .then(() => {
+            ToastAndroid.show(`Property Added Successfully with ${ProductData.Title}` ,ToastAndroid.SHORT);
+            setIsLoading(false);
+            setState(initialState);
+            setIsImageUpload(false);
+          });
     setUrl(imageUrl);
-    alert(url);
   };
   const handleIcon = () => {
     navigation.goBack();
@@ -65,125 +184,6 @@ const AddProduct = ({ navigation }) => {
       .catch(err => {
         ToastAndroid.show(err ,ToastAndroid.SHORT);
       });
-    const { Title, Location, PhoneNo, Price, PType, Area, FType, Bedrooms, Bathrooms, Rooms, Reception, DRoom, Kitchen, Desc } = state;
-  if (!Title) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Title' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Location) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Location' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Price) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Price' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!PhoneNo) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert PhoneNo' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Desc) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Description' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Bedrooms) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert No of Bedrooms' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Area) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Property Area' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Kitchen) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert No of Kitchens' ,ToastAndroid.SHORT)
-        );
-    }
-    else if (!Bathrooms) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert No of Bathrooms' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!PhoneNo) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Phone No' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!PType) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Property Type' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!FType) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert Furnish Type' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Rooms) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert No of Living Rooms' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!Reception) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert No of Receptions' ,ToastAndroid.SHORT)
-      );
-    }
-    else if (!DRoom) {
-      setIsProcess(false);
-      return (
-        ToastAndroid.show('Please Insert No of Dining Room' ,ToastAndroid.SHORT)
-      );
-    }
-    const id = Math.random().toString(36).slice(2);
-    const ProductData = {
-      Title: Title,
-      Location: Location,
-      PhoneNo: PhoneNo,
-      Price: Price,
-      PType: PType,
-      Area: Area,
-      FType: FType,
-      Bedrooms: Bedrooms,
-      Bathrooms: Bathrooms,
-      Rooms: Rooms,
-      Reception: Reception,
-      DRoom: DRoom,
-      Kitchen: Kitchen,
-      Desc: Desc,
-      Url: url,
-      uid : id,
-      dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
-    };
-      await firestore()
-        .collection('Property')
-        .add(ProductData)
-        .then(() => {
-          ToastAndroid.show(`Property Added Successfully with ${ProductData.Title}` ,ToastAndroid.SHORT);
-          setIsLoading(false);
-          setState(initialState);
-        });
   };
   const OpenImageGallery = () => {
     const options = {

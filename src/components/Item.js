@@ -15,11 +15,11 @@ const Item = ({ navigation, route }) => {
 
     useEffect(() => {
         const FavData = favHouses.map((prod, index) => {
-            if (prod.uid === route.params.id.uid) {
+            if (prod.uid === route.params.uid) {
                 return setFavIcon('heart');
             }
         });
-    }, []);
+    }, [favHouses, route.params.uid]);
     const handleData = (item) => {
         setFavIcon('heart');
         dispatch({ type: 'ADD_TO_FAV', id: item.uid, item });
